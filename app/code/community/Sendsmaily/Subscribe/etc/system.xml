@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<config>
+	<sections>
+		<newsletter>
+			<groups>
+				<sendsmaily translate="label">
+					<label>Sendsmaily newsletter subscription</label>
+					<frontend_type>text</frontend_type>
+          <sort_order>100</sort_order>
+          <show_in_default>1</show_in_default>
+          <show_in_website>1</show_in_website>
+          <show_in_store>0</show_in_store>
+					
+					<fields>
+						<active translate="label">
+							<label>Enabled</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+						</active>
+						
+						<api_key translate="label">
+              <label>API key</label>
+              <frontend_type>text</frontend_type>
+              <sort_order>2</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+            </api_key>
+						
+						<autoresponder_id translate="label">
+              <label>Autoresponder ID</label>
+              <frontend_type>text</frontend_type>
+              <sort_order>3</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+            </autoresponder_id>
+						
+						<!--autoresponder translate="label">
+              <label>Autoresponder ID</label>
+              <frontend_type>select</frontend_type>
+							<source_model>subscribe/system_config_source_autoresponder</source_model>
+              <sort_order>1</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+            </autoresponder-->
+					</fields>
+				</sendsmaily>
+			</groups>
+		</newsletter>
+	</sections>
+</config>
