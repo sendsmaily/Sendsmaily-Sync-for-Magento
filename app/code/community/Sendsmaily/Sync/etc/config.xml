@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<Sendsmaily_Sync>
-			<version>0.2</version>
+			<version>1.0</version>
 		</Sendsmaily_Sync>
 	</modules>
 	
