@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Sendsmaily_Sync>
+			<version>0.2</version>
+		</Sendsmaily_Sync>
+	</modules>
+	
+	<global>
+		<models>
+		  <sync>
+        <class>Sendsmaily_Sync_Model</class>
+      </sync>
+		</models>
+		
+		<blocks>
+			<adminhtml>
+				<rewrite>
+					<newsletter_subscriber_grid>Sendsmaily_Sync_Block_Newsletter_Subscriber_Grid</newsletter_subscriber_grid>
+				</rewrite>
+			</adminhtml>
+		</blocks>
+		
+		<helpers>
+		  <sync>
+		    <class>Sendsmaily_Sync_Helper</class>
+		  </sync>
+		</helpers>
+	</global>
+	
+	<admin>
+		<routers>
+			<adminhtml>
+				<args>
+					<modules>
+					  <sendsmaily_sync before="Mage_Adminhtml">Sendsmaily_Sync</sendsmaily_sync>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>
+		
+		<translate>
+			<modules>
+				<Sendsmaily_Sync>
+					<files>
+						<default>Sendsmaily_Sync.csv</default>
+					</files>
+				</Sendsmaily_Sync>
+			</modules>
+		</translate>
+	</admin>
+</config>

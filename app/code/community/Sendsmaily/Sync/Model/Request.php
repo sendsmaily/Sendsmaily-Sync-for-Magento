@@ -1,16 +1,28 @@
 <?php
 
-class Sendsmaily_Subscribe_Model_Request
+class Sendsmaily_Sync_Model_Request
 {
 	/**
-	 * @var post request url
+	 * post request url
+   * @var string
 	 */
-	protected $_requestUrl = 'https://admin.youhavemail.eu/api/magento-import/';
+	protected $_requestUrl = '';
 	
 	/**
-	 * @var request parameters
+   * request parameters
+	 * @var array
 	 */
 	protected $_params = array();
+  
+  /**
+   * load configuration data
+   * @return void
+   */
+  public function __construct(){
+    // build request url
+    $domain = Mage::getStoreConfig('newsletter/sendsmaily/domain');
+    $this->_requestUrl = 'https://' . $domain . '.sendsmaily.net/api/magento-import/';
+  }
 
 	/**
 	 * subscribe addresses to list
@@ -22,8 +34,7 @@ class Sendsmaily_Subscribe_Model_Request
 		
 		// set system params
 		$this->_params = array(
-			'key' => Mage::getStoreConfig('newsletter/sendsmaily/api_key'),
-			'autoresponder' => Mage::getStoreConfig('newsletter/sendsmaily/autoresponder_id')
+			'key' => Mage::getStoreConfig('newsletter/sendsmaily/api_key')
 		);
 		
 		// initialize client connection

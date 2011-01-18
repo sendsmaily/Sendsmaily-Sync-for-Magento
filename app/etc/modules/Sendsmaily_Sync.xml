@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <config>
 	<modules>
-		<Sendsmaily_Subscribe>
+		<Sendsmaily_Sync>
 			<active>true</active>
 			<codePool>community</codePool>
-		</Sendsmaily_Subscribe>
+		</Sendsmaily_Sync>
 	</modules>
 </config>
