@@ -2,7 +2,7 @@
 
 /**
  * Sendsmaily Sync
- * Module to synchronize Magento newsletter subscribers to Sendsmaily
+ * Module to export Magento newsletter subscribers to Sendsmaily
  * Copyright (C) 2010 Sendsmaily
  * 
  * This program is free software: you can redistribute it and/or modify
