@@ -121,7 +121,7 @@ class Sendsmaily_Sync_Helper_Data extends Mage_Adminhtml_Helper_Data
 
       $data[] = array_merge($extra, array(
         'email' => $item->getEmail(),
-        'is_unsubscribed' => ($item->isSubscribed() ? 0 : 1),
+        'subscription_status' => ($item->isSubscribed() ? 0 : 1),
       ));
     }
 
