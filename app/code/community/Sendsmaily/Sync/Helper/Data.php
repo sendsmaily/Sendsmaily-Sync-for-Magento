@@ -110,9 +110,11 @@ class Sendsmaily_Sync_Helper_Data extends Mage_Adminhtml_Helper_Data
 
         // Get customer birthdate.
         if (in_array('birthday', $fields)) {
-          $dob = strtotime($customer->getDob());
-          $extra['birthday'] = Mage::getModel('core/date')
-            ->date('Y-m-d', $dob);
+          $dob = $customer->getDob();
+          if (!empty($dob)) {
+            $extra['birthday'] = Mage::getModel('core/date')
+              ->date('Y-m-d', strtotime($dob));
+          }
         }
 
         // Clean up.
