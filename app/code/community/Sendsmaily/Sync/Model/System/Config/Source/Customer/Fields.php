@@ -34,8 +34,8 @@ class Sendsmaily_Sync_Model_System_Config_Source_Customer_Fields
         array('value' => 'lastname', 'label' => Mage::helper('sync')->__('Lastname')),
         array('value' => 'gender', 'label' => Mage::helper('sync')->__('Gender')),
         array('value' => 'birthday', 'label' => Mage::helper('sync')->__('Date Of Birth')),
-        array('value' => 'website_code', 'label' => Mage::helper('sync')->__('Website')),
-        array('value' => 'store_code', 'label' => Mage::helper('sync')->__('Store Code'))
+        array('value' => 'website', 'label' => Mage::helper('sync')->__('Website')),
+        array('value' => 'store', 'label' => Mage::helper('sync')->__('Store'))
       );
     }
 

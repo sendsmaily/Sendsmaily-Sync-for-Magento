@@ -55,17 +55,17 @@ class Sendsmaily_Sync_Helper_Data extends Mage_Adminhtml_Helper_Data
       }
 
       // Get store code.
-      if (in_array('store_code', $fields)) {
-        $extra['store_code'] = Mage::app()
+      if (in_array('store', $fields)) {
+        $extra['store'] = Mage::app()
           ->getStore($item->getStoreId())
-          ->getCode();
+          ->getName();
       }
 
       // Get website code.
-      if (in_array('website_code', $fields)) {
-        $extra['website_code'] = Mage::app()
+      if (in_array('website', $fields)) {
+        $extra['website'] = Mage::app()
           ->getWebsite($item->getWebsiteId())
-          ->getCode();
+          ->getName();
       }
 
       // Collect customer data.
@@ -87,7 +87,7 @@ class Sendsmaily_Sync_Helper_Data extends Mage_Adminhtml_Helper_Data
         if (in_array('customer_group', $fields)) {
           $code = Mage::getSingleton('customer/group')
             ->load($customer->getGroupId())
-            ->getCode();
+            ->getName();
           $extra['customer_group'] = $code;
         }
 
