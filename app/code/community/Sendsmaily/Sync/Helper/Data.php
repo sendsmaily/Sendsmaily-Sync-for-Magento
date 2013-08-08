@@ -63,8 +63,14 @@ class Sendsmaily_Sync_Helper_Data extends Mage_Adminhtml_Helper_Data
 
       // Get website code.
       if (in_array('website', $fields)) {
+        $websiteId = $item->getWebsiteId();
+        if (empty($websiteId)) {
+          $websiteId = Mage::app()
+            ->getStore($item->getStoreId())
+            ->getWebsiteId();
+        }
         $extra['website'] = Mage::app()
-          ->getWebsite($item->getWebsiteId())
+          ->getWebsite($websiteId)
           ->getName();
       }
 
