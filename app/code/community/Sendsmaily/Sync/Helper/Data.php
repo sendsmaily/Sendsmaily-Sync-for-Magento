@@ -76,7 +76,7 @@ class Sendsmaily_Sync_Helper_Data extends Mage_Adminhtml_Helper_Data
 
       // Collect customer data.
       if ($isCustomer){
-        $customer = Mage::getSingleton('customer/customer')
+        $customer = Mage::getModel('customer/customer')
           ->load($item->getCustomerId());
 
         // Get customer ID.
@@ -128,7 +128,7 @@ class Sendsmaily_Sync_Helper_Data extends Mage_Adminhtml_Helper_Data
       }
 
       $data[] = array_merge($extra, array(
-        'email' => $item->getEmail(),
+        'email' => $item->hasSubscriberEmail() ? $item->getSubscriberEmail() : $item->getEmail(),
         'subscription_status' => $item->getSubscriberStatus(),
       ));
     }
