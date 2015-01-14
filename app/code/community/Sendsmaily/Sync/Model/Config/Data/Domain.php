@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class Sendsmaily_Sync_Model_System_Config_Source_Domain extends Varien_Data_Form_Element_Text
+class Sendsmaily_Sync_Model_Config_Data_Domain extends Mage_Core_Model_Config_Data
 {
   /**
    * Regular expression to find subdomain from value.
