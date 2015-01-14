@@ -19,7 +19,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class Sendsmaily_Sync_Model_System_Config_Source_Domain
+class Sendsmaily_Sync_Model_System_Config_Source_Domain extends Varien_Data_Form_Element_Text
 {
+  /**
+   * Regular expression to find subdomain from value.
+   *
+   * @var string
+   */
+  protected $_regex = '/^(https?\:\/\/)?([^\.\/]+)\.sendsmaily\.net/siU';
 
+  /**
+   * Override field value setter to extract subdomain
+   * part from the value.
+   *
+   * @param mixed $value
+   * @return mixed
+   */
+  public function setValue($value) {
+    // Try to find subdomain from value.
+    $matches = array();
+    preg_match($this->_regex, $value, $matches);
+
+    // Override value, if value matched regular expression.
+    if (!empty($matches) and !empty($matches[2])) {
+      $value = $matches[2];
+    }
+
+    return parent::setValue($value);
+  }
 }
