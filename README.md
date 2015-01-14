@@ -14,15 +14,11 @@ A [Magento](http://magento.com/ "eCommerce Software & eCommerce Platform Solutio
 ### Configuration
 Extension configuration can be found from Magento administration interface, under `System` &rarr; `Configuration` &rarr; `Newsletter` &rarr; `Sendsmaily synchronization` section.
 
-**Enabled** &minus; Enabling the extension adds option `Sendsmaily` to `Export to:` field in `Newsletter` &rarr; `Newsletter subscribers` and allows execution of export CRON task. Defaults to "No".
-
-**Sendsmaily account** &minus; Subdomain part of the Sendsmaily account. For example `xxx` from `https://xxx.sendsmaily.net/`.
-
-**API key** &minus; Sendsmaily account's API key.
-
-**Additional data** &minus; Additional data related to customer. By default only email address and subscribed state is exported.
-
-**How often do you want the cron to run?** &minus; Export subscriber data on a regular basis. To disable regular exports leave the field empty. Defaults to once every day at 1:30 in the morning.|
+* **Enabled** &minus; Enabling the extension adds option `Sendsmaily` to `Export to:` field in `Newsletter` &rarr; `Newsletter subscribers` and allows execution of export CRON task. Defaults to "No".
+* **Sendsmaily account** &minus; Subdomain part of the Sendsmaily account. For example `xxx` from `https://xxx.sendsmaily.net/`.
+* **API key** &minus; Sendsmaily account's API key.
+* **Additional data** &minus; Additional data related to customer. By default only email address and subscribed state is exported.
+* **How often do you want the cron to run?** &minus; Export subscriber data on a regular basis. To disable regular exports leave the field empty. Defaults to once every day at 1:30 in the morning.
 
 ### License
 ```
