@@ -1,7 +1,7 @@
 # Sendsmaily Sync for Magento
 A [Magento](http://magento.com/ "eCommerce Software & eCommerce Platform Solutions | Magento") extension that allows you to export newsletter subscribers from your Magento administration interface to [Sendsmaily](https://sendsmaily.com/ "Sendsmaily").
 
-**NOTE!** One of the most noticeable shortcoming of the extension is that it allows only one-way synchornization, i.e. subscribers can **only** be exported from Magento to Sendsmaily. It will be addressed in the next major version, after Sendsmaily has added the capability for data export through the API.
+**NOTE!** One of the most noticeable shortcoming of the extension is that it allows only one-way synchronization, i.e. subscribers can **only** be exported from Magento to Sendsmaily. It will be addressed in the next major version, after Sendsmaily has added the capability for data export through the API.
 
 ### Installation
 1. Make sure you have Magento 1.7, 1.8 or 1.9 installed.
