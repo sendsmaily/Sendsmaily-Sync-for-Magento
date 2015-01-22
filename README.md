@@ -20,6 +20,10 @@ Extension configuration can be found from Magento administration interface, unde
 * **Additional data** &minus; Additional data related to customer. By default only email address and subscribed state is exported.
 * **How often do you want the cron to run?** &minus; Export subscriber data on a regular basis. To disable regular exports leave the field empty. Defaults to once every day at 1:30 in the morning.
 
+### Troubleshooting
+##### Regular export fails to run
+Usually a good place to start would be to check Magento CRON's `Schedule Ahead for` value. We have found that value of **60** works the best, if you are running daily exports.
+
 ### License
 ```
 This program is free software: you can redistribute it and/or modify
