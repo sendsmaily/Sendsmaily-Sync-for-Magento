@@ -51,7 +51,7 @@
   <default>
     <newsletter>
       <sendsmaily>
-        <sync_period>30 1 * * *</sync_period>
+        <sync_period>0 */4 * * *</sync_period>
       </sendsmaily>
     </newsletter>
   </default>

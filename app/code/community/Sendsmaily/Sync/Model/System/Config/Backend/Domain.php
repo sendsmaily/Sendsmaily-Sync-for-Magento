@@ -19,32 +19,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class Sendsmaily_Sync_Model_Config_Data_Domain extends Mage_Core_Model_Config_Data
+class Sendsmaily_Sync_Model_System_Config_Backend_Domain extends Mage_Core_Model_Config_Data
 {
-  /**
-   * Regular expression to find subdomain from value.
-   *
-   * @var string
-   */
-  protected $_regex = '/^(https?\:\/\/)?([^\.\/]+)\.sendsmaily\.net/siU';
 
   /**
    * Override field value setter to extract subdomain
    * part from the value.
    *
-   * @param mixed $value
+   * @param string $subdomain
    * @return mixed
    */
-  public function setValue($value) {
-    // Try to find subdomain from value.
-    $matches = array();
-    preg_match($this->_regex, $value, $matches);
-
-    // Override value, if value matched regular expression.
-    if (!empty($matches) and !empty($matches[2])) {
-      $value = $matches[2];
+  public function setValue($subdomain)
+  {
+    // Normalize subdomain.
+    // First, try to parse as full URL. If that fails, try to parse as subdomain.sendsmaily.net, and
+    // if all else fails, then clean up subdomain and pass as is.
+    if (filter_var($subdomain, FILTER_VALIDATE_URL)) {
+        $url = parse_url($subdomain);
+        $parts = explode('.', $url['host']);
+        $subdomain = count($parts) >= 3 ? $parts[0] : '';
+    } elseif (preg_match('/^[^\.]+\.sendsmaily\.net$/', $subdomain)) {
+        $parts = explode('.', $subdomain);
+        $subdomain = $parts[0];
     }
 
-    return parent::setValue($value);
+    $subdomain = preg_replace('/[^a-zA-Z0-9]+/', '', $subdomain);
+
+    return parent::setValue($subdomain);
   }
 }

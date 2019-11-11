@@ -26,7 +26,8 @@ class Sendsmaily_Sync_Block_Newsletter_Subscriber_Grid extends Mage_Adminhtml_Bl
    *
    * @return void
    */
-  protected function _prepareColumns() {
+  protected function _prepareColumns()
+  {
     // Call parent class function.
     $result = parent::_prepareColumns();
 
@@ -43,7 +44,8 @@ class Sendsmaily_Sync_Block_Newsletter_Subscriber_Grid extends Mage_Adminhtml_Bl
    *
    * @return array
    */
-  public function toSendsmaily() {
+  public function toSendsmaily()
+  {
     $this->_isExport = true;
     $this->_prepareGrid();
     $this->getCollection()->getSelect()->limit();

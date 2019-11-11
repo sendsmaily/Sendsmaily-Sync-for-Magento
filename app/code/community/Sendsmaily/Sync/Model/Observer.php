@@ -21,31 +21,40 @@
 
 class Sendsmaily_Sync_Model_Observer
 {
-  /**
-   * Cron task to synchronize Sendsmaily database with Magento
-   * newsletter subscribers.
-   *
-   * @return void
-   */
-  public function cron() {
-    // Has module been activated?
-    if (Mage::getStoreConfig('newsletter/sendsmaily/active') == false) {
-      return;
+    /**
+     * Limit Smaily unsubscribers request size.
+     */
+    const UNSUBSCRIBE_BATCH_LIMIT = 1000;
+
+    /**
+     * Cron task to synchronize Sendsmaily database with Magento
+     * newsletter subscribers.
+     *
+     * @return void
+     */
+    public function cron()
+    {
+        // Has module been activated? Is sync enabled?
+        if (Mage::getStoreConfig('newsletter/sendsmaily/active') == false ||
+            Mage::getStoreConfig('newsletter/sendsmaily/active_sync') == false) {
+        return;
+        }
+
+        $unsubscribers = Mage::helper('sync')->getUnsubscribersEmails(self::UNSUBSCRIBE_BATCH_LIMIT);
+        Mage::helper('sync')->removeUnsubscribers($unsubscribers);
+
+        // Get sync data.
+        $data = Mage::helper('sync')->getSyncData();
+
+        // Make the request (in chunks of 500).
+        $chunks = array_chunk($data, 500);
+        foreach ($chunks as $chunk) {
+            $result = Mage::getModel('sync/curl')->callApi('contact', $chunk, 'POST');
+            // On error go to next chunk.
+            $isOk = isset($result['code']) and $result['code'] >= 200;
+            if (is_array($result) and $isOk) {
+                continue;
+            }
+        }
     }
-
-    // Get sync data.
-    $data = Mage::helper('sync')->getSyncData();
-
-    // Make the request (in chunks of 500).
-    $chunks = array_chunk($data, 500);
-    foreach ($chunks as $chunk) {
-      $result = Mage::getModel('sync/request')->subscribe($chunk);
-
-      // On error go to next chunk.
-      $isOk = isset($result['code']) and $result['code'] >= 200;
-      if (is_array($result) and $isOk) {
-        continue;
-      }
-    }
-  }
 }
