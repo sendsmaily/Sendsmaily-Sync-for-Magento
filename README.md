@@ -15,7 +15,7 @@ A [Magento](http://magento.com/ "eCommerce Software & eCommerce Platform Solutio
 Extension configuration can be found from Magento administration interface, under `System` &rarr; `Configuration` &rarr; `Newsletter` &rarr; `Smaily Email Marketing And Automation` section.
 
 * **General settings** &minus; Enables the extension and holds credentials related information.
-* **Customer Synchronization** &minus; Manages subscriber synchronization settings. Select autoresponder for automation, fields to sync and sync frequency.
+* **Customer Synchronization** &minus; Manages subscriber synchronization settings. Select fields to sync and sync frequency.
 
 ## Usage
 
