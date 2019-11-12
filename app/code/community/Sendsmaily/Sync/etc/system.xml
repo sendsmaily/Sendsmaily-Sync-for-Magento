@@ -23,14 +23,14 @@
   <sections>
     <newsletter>
       <groups>
-        <sendsmaily translate="label">
+        <sendsmaily translate="label comment">
           <label>Smaily Email Marketing And Automation</label>
           <frontend_type>text</frontend_type>
           <sort_order>100</sort_order>
           <show_in_default>1</show_in_default>
           <show_in_website>1</show_in_website>
           <show_in_store>0</show_in_store>
-          <comment><![CDATA[<strong>Please fill out credentials to enable this module.</strong><br />You can create Smaily account at our website<a href="https://smaily.com" target="_blank">Welcome to Smaily!</a>]]></comment>
+          <comment><![CDATA[<strong>Please fill out credentials to enable this module.</strong><br />You can create Smaily account at our website<a href=https://smaily.com target=_blank>Welcome to Smaily!</a>]]></comment>
 
           <fields>
             <credentials_section translate="label">
@@ -61,7 +61,7 @@
               <show_in_default>1</show_in_default>
               <show_in_website>1</show_in_website>
               <show_in_store>0</show_in_store>
-              <comment><![CDATA[For example "demo" from https://<strong>demo</strong>.sendsmaily.net/]]></comment>
+              <comment><![CDATA[For example &quot;demo&quot; from https://<strong>demo</strong>.sendsmaily.net/]]></comment>
               <validate>required-entry</validate>
             </domain>
 
@@ -82,7 +82,7 @@
               <show_in_default>1</show_in_default>
               <show_in_website>1</show_in_website>
               <show_in_store>0</show_in_store>
-              <comment><![CDATA[<a href="http://help.smaily.com/en/support/solutions/articles/16000062943-create-api-user" target="_blank">How to create API credentials?</a>]]></comment>
+              <comment><![CDATA[<a href=http://help.smaily.com/en/support/solutions/articles/16000062943-create-api-user target=_blank>How to create API credentials?</a>]]></comment>
               <validate>required-entry</validate>
             </password>
 
@@ -120,7 +120,7 @@
             </fields>
 
             <sync_period translate="label comment">
-              <label>How often do you want the cron to run?</label>
+              <label>How often do you want to synchronize?</label>
               <frontend_type>select</frontend_type>
               <source_model>sync/system_config_source_customer_schedule</source_model>
               <sort_order>24</sort_order>
