@@ -60,7 +60,7 @@
     <jobs>
       <sendsmaily_sync>
         <schedule><config_path>newsletter/sendsmaily/sync_period</config_path></schedule>
-        <run><model>sync/observer::cron</model></run>
+        <run><model>sync/cron::customerSync</model></run>
       </sendsmaily_sync>
     </jobs>
   </crontab>

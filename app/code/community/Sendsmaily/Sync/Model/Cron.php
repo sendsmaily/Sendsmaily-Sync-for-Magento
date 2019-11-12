@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class Sendsmaily_Sync_Model_Observer
+class Sendsmaily_Sync_Model_Cron
 {
     /**
      * Limit Smaily unsubscribers request size.
@@ -32,7 +32,7 @@ class Sendsmaily_Sync_Model_Observer
      *
      * @return void
      */
-    public function cron()
+    public function customerSync()
     {
         // Has module been activated? Is sync enabled?
         if (Mage::getStoreConfig('newsletter/sendsmaily/active') == false ||
