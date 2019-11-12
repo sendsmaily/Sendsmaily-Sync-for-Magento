@@ -1,4 +1,4 @@
-# Sendsmaily Sync for Magento
+# Smaily Email Marketing And Automation
 A [Magento](http://magento.com/ "eCommerce Software & eCommerce Platform Solutions | Magento") extension that allows you to export newsletter subscribers from your Magento administration interface to [Sendsmaily](https://sendsmaily.com/ "Sendsmaily").
 
 **NOTE!** One of the most noticeable shortcoming of the extension is that it allows only one-way synchronization, i.e. subscribers can **only** be exported from Magento to Sendsmaily. It will be addressed in the next major version, after Sendsmaily has added the capability for data export through the API.
@@ -12,23 +12,39 @@ A [Magento](http://magento.com/ "eCommerce Software & eCommerce Platform Solutio
 5. Done, move to configuration section.
 
 ## Configuration
-Extension configuration can be found from Magento administration interface, under `System` &rarr; `Configuration` &rarr; `Newsletter` &rarr; `Sendsmaily synchronization` section.
+Extension configuration can be found from Magento administration interface, under `System` &rarr; `Configuration` &rarr; `Newsletter` &rarr; `Smaily Email Marketing And Automation` section.
 
-* **Enabled** &minus; Enables the extension; manual and regular export. Defaults to "No".
-* **Sendsmaily account** &minus; Subdomain part of the Sendsmaily account. For example `xxx` from `https://xxx.sendsmaily.net/`.
-* **API key** &minus; Sendsmaily account's API key.
-* **Additional data** &minus; Additional data related to customer. By default only email address and subscribed state is exported.
-* **How often do you want the cron to run?** &minus; Export subscriber data on a regular basis. To disable regular exports leave the field empty. Defaults to once every day at 1:30 in the morning.
+* **General settings** &minus; Enables the extension and holds credentials related information.
+* **Customer Synchronization** &minus; Manages subscriber synchronization settings. Select autoresponder for automation, fields to sync and sync frequency.
+
+## Usage
+
+1. Go to `System` &rarr; `Configuration` &rarr; `Newsletter` &rarr; `Smaily Email Marketing And Automation`.
+2. Select `Enabled` &rarr; `Yes` status in General Settings
+3. Insert your Smaily API authentication information and press `Save Config` to get started
+4. To enable customer synchronization select `Enabled` &rarr; `Yes` status in Customer Synchronization Settings
+5. Select fields you would like to sync and frequency
 
 ## Manual export
 At any time you can trigger a manual export from `Newsletter` &rarr; `Newsletter subscribers` by selecting `Sendsmaily` from `Export to:` dropdown and hitting that `Export` button.
 
-To export specific subscriber(s), filter desired subscribers using the fields under the table header and click `Export`. **NOTE! All filtered subscribers are exported, selecting/marking row(s) does not export that/these row(s).**
+To export specific subscriber(s), filter desired subscribers using the fields under the table header and click `Export`. 
+**NOTE! All filtered subscribers are exported, selecting/marking row(s) does not export that/these row(s).**
 
 ## Troubleshooting
 **Regular export fails to run**
 
 Usually a good place to start would be to check Magento CRON's `Schedule Ahead for` value. We have found that value of **60** works the best, if you are running daily exports.
+
+## Changelog
+
+2.0.0
+
+- Refractor functionality to implement new API
+- Customer Synchronization now removes unsubscribers from Magento store
+- Store unsubscribers are also updated in Smaily system
+- Use subdomain and username/password combination for authentication with Smaily
+- Updated admin page look
 
 ## License
 ```
