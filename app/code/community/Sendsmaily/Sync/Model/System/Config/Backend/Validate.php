@@ -75,5 +75,4 @@ class Sendsmaily_Sync_Model_System_Config_Backend_Validate extends Mage_Core_Mod
 
         return parent::_beforeSave();
     }
-
 }

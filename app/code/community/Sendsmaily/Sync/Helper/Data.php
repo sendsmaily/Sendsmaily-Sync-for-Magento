@@ -204,7 +204,7 @@ class Sendsmaily_Sync_Helper_Data extends Mage_Adminhtml_Helper_Data
             $unsubscribersEmails[] = $unsubscriber['email'];
         }
 
-        // Smaily api call offset is considered as page number, not sql offset!
+        // Smaily API call offset is considered as page number, not SQL offset!
         $offset++;
     }
 
