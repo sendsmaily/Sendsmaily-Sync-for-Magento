@@ -42,7 +42,7 @@ Usually a good place to start would be to check Magento CRON's `Schedule Ahead f
 
 ### 2.0.1
 
-- Add support for direct products import to the Smaily RSS-feed .
+- Add support for direct products import to the Smaily RSS-feed.
 
 ### 2.0.0
 

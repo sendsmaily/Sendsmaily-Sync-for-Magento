@@ -67,7 +67,7 @@ class Sendsmaily_Sync_Block_Rss extends Mage_Rss_Block_Catalog_Abstract
             ->setStoreId($storeId)
             ->addStoreFilter()
             ->addAttributeToSelect(array('name', 'price', 'special_price', 'description', 'thumbnail'), 'inner')
-            ->addAttributeToSort('created_at', 'desc');
+            ->addAttributeToSort('updated_at', 'desc');
 
         $products->setVisibility(Mage::getSingleton('catalog/product_visibility')->getVisibleInSiteIds());
         // Using resource iterator to load the data one by one instead of loading all at the same time.
