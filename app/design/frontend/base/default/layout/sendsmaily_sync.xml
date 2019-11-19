@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <sync_rss_index>
+        <block type="sync/rss" name="smly.rss" output="toHtml" />
+    </sync_rss_index>
+</layout>
