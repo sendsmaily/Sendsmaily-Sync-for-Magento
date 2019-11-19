@@ -1,7 +1,5 @@
-# Smaily Email Marketing And Automation
+# Smaily for Magento 1.x
 A [Magento](http://magento.com/ "eCommerce Software & eCommerce Platform Solutions | Magento") extension that allows you to export newsletter subscribers from your Magento administration interface to [Sendsmaily](https://sendsmaily.com/ "Sendsmaily").
-
-**NOTE!** One of the most noticeable shortcoming of the extension is that it allows only one-way synchronization, i.e. subscribers can **only** be exported from Magento to Sendsmaily. It will be addressed in the next major version, after Sendsmaily has added the capability for data export through the API.
 
 ## Installation
 1. Make sure you have Magento 1.7, 1.8 or 1.9 installed.
@@ -29,7 +27,7 @@ Extension configuration can be found from Magento administration interface, unde
 At any time you can trigger a manual export from `Newsletter` &rarr; `Newsletter subscribers` by selecting `Sendsmaily` from `Export to:` dropdown and hitting that `Export` button.
 
 To export specific subscriber(s), filter desired subscribers using the fields under the table header and click `Export`. 
-**NOTE! All filtered subscribers are exported, selecting/marking row(s) does not export that/these row(s).**
+**NOTE! All filtered subscribers are exported. Selecting rows has no effect.**
 
 ## Troubleshooting
 **Regular export fails to run**

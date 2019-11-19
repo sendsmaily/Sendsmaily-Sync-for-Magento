@@ -37,7 +37,7 @@ class Sendsmaily_Sync_Model_Cron
         // Has module been activated? Is sync enabled?
         if (Mage::getStoreConfig('newsletter/sendsmaily/active') == false ||
             Mage::getStoreConfig('newsletter/sendsmaily/active_sync') == false) {
-        return;
+            return;
         }
 
         $unsubscribers = Mage::helper('sync')->getUnsubscribersEmails(self::UNSUBSCRIBE_BATCH_LIMIT);
