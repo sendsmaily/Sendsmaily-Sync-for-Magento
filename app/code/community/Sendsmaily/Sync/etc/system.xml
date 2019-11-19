@@ -23,65 +23,115 @@
   <sections>
     <newsletter>
       <groups>
-        <sendsmaily translate="label">
-          <label>Sendsmaily synchronization</label>
+        <sendsmaily translate="label comment">
+          <label>Smaily Email Marketing And Automation</label>
           <frontend_type>text</frontend_type>
           <sort_order>100</sort_order>
           <show_in_default>1</show_in_default>
           <show_in_website>1</show_in_website>
           <show_in_store>0</show_in_store>
+          <comment><![CDATA[<strong>Please fill out credentials to enable this module.</strong><br />You can create Smaily account at our website<a href=https://smaily.com target=_blank>Welcome to Smaily!</a>]]></comment>
 
           <fields>
+            <credentials_section translate="label">
+              <label>General Settings</label>
+              <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+              <sort_order>10</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+            </credentials_section>
+
             <active translate="label">
               <label>Enabled</label>
               <frontend_type>select</frontend_type>
               <source_model>adminhtml/system_config_source_yesno</source_model>
-              <sort_order>1</sort_order>
+              <backend_model>sync/system_config_backend_validate</backend_model>
+              <sort_order>11</sort_order>
               <show_in_default>1</show_in_default>
               <show_in_website>1</show_in_website>
               <show_in_store>0</show_in_store>
             </active>
 
             <domain translate="label comment">
-              <label>Sendsmaily account</label>
+              <label>Subdomain</label>
               <frontend_type>text</frontend_type>
-              <backend_model>sync/config_data_domain</backend_model>
-              <sort_order>2</sort_order>
+              <backend_model>sync/system_config_backend_domain</backend_model>
+              <sort_order>12</sort_order>
               <show_in_default>1</show_in_default>
               <show_in_website>1</show_in_website>
               <show_in_store>0</show_in_store>
-              <comment>For example "demo" from https://demo.sendsmaily.net/</comment>
+              <comment><![CDATA[For example &quot;demo&quot; from https://<strong>demo</strong>.sendsmaily.net/]]></comment>
+              <validate>required-entry</validate>
             </domain>
 
-            <api_key translate="label">
-              <label>API key</label>
+            <username translate="label comment">
+              <label>Username</label>
               <frontend_type>text</frontend_type>
-              <sort_order>3</sort_order>
+              <sort_order>13</sort_order>
               <show_in_default>1</show_in_default>
               <show_in_website>1</show_in_website>
               <show_in_store>0</show_in_store>
-            </api_key>
+              <validate>required-entry</validate>
+            </username>
+
+            <password translate="label comment">
+              <label>Password</label>
+              <frontend_type>password</frontend_type>
+              <sort_order>14</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+              <comment><![CDATA[<a href=http://help.smaily.com/en/support/solutions/articles/16000062943-create-api-user target=_blank>How to create API credentials?</a>]]></comment>
+              <validate>required-entry</validate>
+            </password>
+
+            <synchronization_section translate="label">
+              <label>Customer Synchronization</label>
+              <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+              <sort_order>20</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+            </synchronization_section>
+
+            <active_sync translate="label">
+              <label>Enabled</label>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>21</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+            </active_sync>
 
             <fields translate="label comment">
               <label>Additional data</label>
               <comment>Select fields you wish to synchronize along with subscription data</comment>
               <frontend_type>multiselect</frontend_type>
               <source_model>sync/system_config_source_customer_fields</source_model>
-              <sort_order>4</sort_order>
+              <sort_order>23</sort_order>
               <show_in_default>1</show_in_default>
               <show_in_website>1</show_in_website>
               <show_in_store>0</show_in_store>
+              <depends>
+                <active_sync>1</active_sync>
+              </depends>
             </fields>
 
             <sync_period translate="label comment">
-              <label>How often do you want the cron to run?</label>
-              <frontend_type>text</frontend_type>
-              <sort_order>5</sort_order>
-              <comment>Use Crontab Format (Eg. "*/5 * * * *" for every 5 minutes). Default, once a day "30 1 * * *". Leave the field empty to disable regular synchronization.</comment>
+              <label>How often do you want to synchronize?</label>
+              <frontend_type>select</frontend_type>
+              <source_model>sync/system_config_source_customer_schedule</source_model>
+              <sort_order>24</sort_order>
               <show_in_default>1</show_in_default>
               <show_in_website>1</show_in_website>
               <show_in_store>0</show_in_store>
+              <depends>
+                <active_sync>1</active_sync>
+              </depends>
             </sync_period>
+
           </fields>
         </sendsmaily>
       </groups>

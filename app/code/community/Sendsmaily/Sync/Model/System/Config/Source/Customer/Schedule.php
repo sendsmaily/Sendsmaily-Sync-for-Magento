@@ -19,33 +19,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class Sendsmaily_Sync_Model_Observer
+class Sendsmaily_Sync_Model_System_Config_Source_Customer_Schedule
 {
-  /**
-   * Cron task to synchronize Sendsmaily database with Magento
-   * newsletter subscribers.
-   *
-   * @return void
-   */
-  public function cron() {
-    // Has module been activated?
-    if (Mage::getStoreConfig('newsletter/sendsmaily/active') == false) {
-      return;
+  protected $_options;
+
+  public function toOptionArray()
+  {
+    if (!$this->_options) {
+      $this->_options = array(
+        array('value' => '0 */4 * * *', 'label' => Mage::helper('sync')->__('Every 4 hours')),
+        array('value' => '0 */12 * * *', 'label' => Mage::helper('sync')->__('Twice a day')),
+        array('value' => '0 * */1 * *', 'label' => Mage::helper('sync')->__('Every day')),
+        array('value' => '0 0 * * 0', 'label' => Mage::helper('sync')->__('Once a week')),
+      );
     }
 
-    // Get sync data.
-    $data = Mage::helper('sync')->getSyncData();
-
-    // Make the request (in chunks of 500).
-    $chunks = array_chunk($data, 500);
-    foreach ($chunks as $chunk) {
-      $result = Mage::getModel('sync/request')->subscribe($chunk);
-
-      // On error go to next chunk.
-      $isOk = isset($result['code']) and $result['code'] >= 200;
-      if (is_array($result) and $isOk) {
-        continue;
-      }
-    }
+    return $this->_options;
   }
 }

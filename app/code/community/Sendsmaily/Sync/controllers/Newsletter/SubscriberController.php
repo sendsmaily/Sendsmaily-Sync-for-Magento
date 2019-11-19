@@ -28,8 +28,9 @@ class Sendsmaily_Sync_Newsletter_SubscriberController extends Mage_Adminhtml_New
    *
    * @return void
    */
-  public function exportToSendsmailyAction() {
-    if(Mage::getStoreConfig('newsletter/sendsmaily/active') == false){
+  public function exportToSendsmailyAction()
+  {
+    if (Mage::getStoreConfig('newsletter/sendsmaily/active') == false) {
       $message = $this->_getHelper()->__('Module is not activated!');
       $this->_getSession()->addError($message);
       return $this->_redirectReferer();
@@ -43,7 +44,7 @@ class Sendsmaily_Sync_Newsletter_SubscriberController extends Mage_Adminhtml_New
     // Make the request (in chunks of 500).
     $chunks = array_chunk($data, 500);
     foreach ($chunks as $chunk) {
-      $result = Mage::getModel('sync/request')->subscribe($chunk);
+      $result = Mage::getModel('sync/curl')->callApi('contact', $chunk, 'POST');
 
       // Handle errors returned from Sendsmaily.
       if (is_array($result) and isset($result['code']) and $result['code'] >= 200) {
@@ -63,7 +64,8 @@ class Sendsmaily_Sync_Newsletter_SubscriberController extends Mage_Adminhtml_New
    *
    * @return Sendsmaily_Sync_Helper_Data
    */
-  protected function _getHelper() {
+  protected function _getHelper()
+  {
     return Mage::helper('sync');
   }
 }
