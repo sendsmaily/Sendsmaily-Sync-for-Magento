@@ -67,13 +67,12 @@ class Sendsmaily_Sync_Block_Rss extends Mage_Rss_Block_Catalog_Abstract
             ->setStoreId($storeId)
             ->addStoreFilter()
             ->addAttributeToSelect(array('name', 'price', 'special_price', 'description', 'thumbnail'), 'inner')
-            ->addAttributeToSort('created_at', 'desc')
-            ->setPageSize(50)
-            ->setCurPage(1);
+            ->addAttributeToSort('created_at', 'desc');
 
+        $products->setVisibility(Mage::getSingleton('catalog/product_visibility')->getVisibleInSiteIds());
         // Using resource iterator to load the data one by one instead of loading all at the same time.
         Mage::getSingleton('core/resource_iterator')->walk(
-            $products->getSelect(),
+            $products->getSelect()->limit(50),
             array(array($this, 'addNewItemXmlCallback')),
             array('rssObj'=> $rssObj, 'product'=>$product, 'symbol' => $currencySymbol)
         );
@@ -90,17 +89,19 @@ class Sendsmaily_Sync_Block_Rss extends Mage_Rss_Block_Catalog_Abstract
     {
         $product = $args['product'];
         $currencySymbol = $args['symbol'];
+        Mage::dispatchEvent('sync_rss_new_xml_callback', $args);
 
-        $product->setAllowedInRss(true);
-        $product->setAllowedPriceInRss(true);
-        Mage::dispatchEvent('rss_catalog_new_xml_callback', $args);
+        $product->setData($args['row']);
+        // Show only active products.
+        if ($product->getStatus() === Mage_Catalog_Model_Product_Status::STATUS_ENABLED) {
+            $product->setAllowedInRss(true);
+        }
 
         if (!$product->getAllowedInRss()) {
             //Skip adding product to RSS
             return;
         }
 
-        $product->setData($args['row']);
         $imgUrl = Mage::helper('catalog/image')->init($product, 'thumbnail')->__toString();
         $price = $product->getPrice();
         $finalPrice = $product->getFinalPrice();
