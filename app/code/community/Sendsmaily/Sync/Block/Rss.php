@@ -25,7 +25,7 @@ class Sendsmaily_Sync_Block_Rss extends Mage_Rss_Block_Catalog_Abstract
 
     protected function _construct()
     {
-        // Setting cache to save the rss for 5 minutes.
+        // Setting cache to save the RSS for 5 minutes.
         $this->setCacheTags(array(self::CACHE_TAG));
         $this->setCacheKey('sendsmaily_rss_index');
         $this->setCacheLifetime(300);
@@ -81,7 +81,7 @@ class Sendsmaily_Sync_Block_Rss extends Mage_Rss_Block_Catalog_Abstract
     }
 
     /**
-     * Preparing data and adding to rss object
+     * Preparing data and adding to RSS object
      *
      * @param array $args
      */

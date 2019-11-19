@@ -22,28 +22,54 @@
 class Sendsmaily_Sync_Model_Rss extends Mage_Rss_Model_Rss
 {
 
+    /**
+     * Add header to Smaily RSS feed
+     *
+     * @param array $data Header elements
+     * @return Sendsmaily_Sync_Model_Rss Smaily RSS-object
+     */
     public function _addHeader($data = array())
     {
         $this->_feedArray['channel'] = $data;
         return $this;
     }
 
+    /**
+     * Add items/products to RSS-feed
+     *
+     * @param array $entry Product data collection
+     * @return Sendsmaily_Sync_Model_Rss Smaily RSS-object
+     */
     public function _addEntry($entry)
     {
         $this->_feedArray['channel']['item'][]= $entry;
         return $this;
     }
 
+    /**
+     * Response to controller in XML format.
+     *
+     * @return string XML-string of RSS-feed
+     */
     public function createRssXml()
     {
         try {
             return $this->arrayToXml($this->getFeedArray());
         } catch (Exception $e) {
-            Mage::log('Error in processing xml. %s', $e->getMessage(), null, 'smaily.log', true);
+            // TODO: Error message to front end.
+            Mage::log('Error in processing xml. %s'. $e->getMessage(), null, 'smaily.log', true);
             return array();
         }
     }
 
+    /**
+     * Generate XML-structure based of feed array.
+     *
+     * @param array $array Rss-feed item
+     * @param string $rootElement Root element of RSS-feed
+     * @param SimpleXMLElement $xml XML-structure of current iteration
+     * @return string XML-formatted string
+     */
     public function arrayToXml($array, $rootElement = null, $xml = null)
     {
         $_xml = $xml;
@@ -96,6 +122,13 @@ class Sendsmaily_Sync_Model_Rss extends Mage_Rss_Model_Rss
         return $_xml->asXml();
     }
 
+    /**
+     * Return CDATA element
+     *
+     * @param string $text Element text
+     * @param SimpleXMLElement $node Parent node
+     * @return void
+     */
     public function addCData($text, $node)
     {
         $node = dom_import_simplexml($node);
