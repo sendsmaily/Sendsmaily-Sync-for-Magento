@@ -21,12 +21,13 @@
 
 class Sendsmaily_Sync_Block_Rss extends Mage_Rss_Block_Catalog_Abstract
 {
+    const CACHE_TAG = 'block_html_sync_rss_index';
+
     protected function _construct()
     {
-        /*
-        * setting cache to save the rss for 5 minutes
-        */
-        $this->setCacheKey('sendsmaily/rss/index');
+        // Setting cache to save the rss for 5 minutes.
+        $this->setCacheTags(array(self::CACHE_TAG));
+        $this->setCacheKey('sendsmaily_rss_index');
         $this->setCacheLifetime(300);
     }
 
@@ -34,18 +35,17 @@ class Sendsmaily_Sync_Block_Rss extends Mage_Rss_Block_Catalog_Abstract
     {
         $storeId = $this->_getStoreId();
 
-        // HEADER
-        $newurl = Mage::getUrl('sendsmaily/rss/');
+        // Header.
         $title = Mage::app()->getStore()->getGroup()->getName();
         $lang = Mage::getStoreConfig('general/locale/code');
-        $lastBuildDate = Mage::getSingleton('core/date')->date();
+        $lastBuildDate = Mage::getSingleton('core/date')->date('D, d M Y H:i:s');
 
-        // BUILD ARRAY OF RSS ELEMENTS
+        // Build array of elements.
         $rssObj = Mage::getModel('sync/rss');
         $data = array(
-            'title' => $title,
-            'link'        => $newurl,
-            'description' => 'Product Feed',
+            'title'         => $title,
+            'link'          => Mage::getBaseUrl(),
+            'description'   => 'Product Feed',
             'lastBuildDate' => $lastBuildDate
         );
         $rssObj->_addHeader($data);
@@ -60,7 +60,7 @@ class Sendsmaily_Sync_Block_Rss extends Mage_Rss_Block_Catalog_Abstract
             )->getSymbol();
 
 
-        // GATHER PRODUCTS
+        // Gather products.
         $product = Mage::getModel('catalog/product');
 
         $products = $product->getCollection()
@@ -71,10 +71,7 @@ class Sendsmaily_Sync_Block_Rss extends Mage_Rss_Block_Catalog_Abstract
             ->setPageSize(50)
             ->setCurPage(1);
 
-        /*
-        using resource iterator to load the data one by one
-        instead of loading all at the same time. loading all data at the same time can cause the big memory allocation.
-        */
+        // Using resource iterator to load the data one by one instead of loading all at the same time.
         Mage::getSingleton('core/resource_iterator')->walk(
             $products->getSelect(),
             array(array($this, 'addNewItemXmlCallback')),
@@ -110,20 +107,20 @@ class Sendsmaily_Sync_Block_Rss extends Mage_Rss_Block_Catalog_Abstract
 
         $rssObj = $args['rssObj'];
         $data = array(
-            'title'         => $product->getName(),
-            'link'          => $product->getProductUrl(),
-            'guid'          => $product->getProductUrl(),
-            'pubDate'       => $product->getCreatedAt(),
-            'description'   => $product->getDescription(),
-            'imageUrl'      => $imgUrl,
+            'title'       => $product->getName(),
+            'link'        => $product->getProductUrl(),
+            'guid'        => $product->getProductUrl(),
+            'pubDate'     => Mage::getSingleton('core/date')->date('D, d M Y H:i:s', $product->getCreatedAt()),
+            'description' => $product->getDescription(),
+            'enclosure'   => $imgUrl,
         );
         
         if ($finalPrice < $price) {
             $percentage = (float)($price - $finalPrice) / $price * 100;
             $discount = number_format($percentage, 2);
             $data['price'] =  number_format((float) $finalPrice, 2) . $currencySymbol;
+            $data['old_price'] = number_format((float) $price, 2) . $currencySymbol;
             $data['discount'] = $discount . '%';
-            $data['oldPrice'] = number_format((float) $price, 2) . $currencySymbol;
         } else {
             $data['price'] = number_format((float) $price, 2) . $currencySymbol;
         }

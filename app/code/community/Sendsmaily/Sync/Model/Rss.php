@@ -69,6 +69,15 @@ class Sendsmaily_Sync_Model_Rss extends Mage_Rss_Model_Rss
             } else {
                 // Simply add child element.
                 switch ($key) {
+                    case 'price':
+                    case 'old_price':
+                    case 'discount':
+                        $_xml->addChild($key, $item, 'https://sendsmaily.net/schema/editor/rss.xsd');
+                        break;
+                    case 'enclosure':
+                        $enclosure = $_xml->addChild($key);
+                        $enclosure->addAttribute('url', $item);
+                        break;
                     case 'description':
                     case 'title':
                         $value =  $_xml->addChild($key);
