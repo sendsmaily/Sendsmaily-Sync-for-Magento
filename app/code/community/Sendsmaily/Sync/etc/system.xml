@@ -34,7 +34,7 @@
 
           <fields>
             <credentials_section translate="label">
-              <label>General Settings</label>
+              <label>General settings</label>
               <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
               <sort_order>10</sort_order>
               <show_in_default>1</show_in_default>
@@ -87,7 +87,7 @@
             </password>
 
             <synchronization_section translate="label">
-              <label>Customer Synchronization</label>
+              <label>Customer synchronization</label>
               <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
               <sort_order>20</sort_order>
               <show_in_default>1</show_in_default>
