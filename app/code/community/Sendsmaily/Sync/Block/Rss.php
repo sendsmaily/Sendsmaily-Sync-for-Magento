@@ -92,15 +92,6 @@ class Sendsmaily_Sync_Block_Rss extends Mage_Rss_Block_Catalog_Abstract
         Mage::dispatchEvent('sync_rss_new_xml_callback', $args);
 
         $product->setData($args['row']);
-        // Show only active products.
-        if ($product->getStatus() === Mage_Catalog_Model_Product_Status::STATUS_ENABLED) {
-            $product->setAllowedInRss(true);
-        }
-
-        if (!$product->getAllowedInRss()) {
-            //Skip adding product to RSS
-            return;
-        }
 
         $imgUrl = Mage::helper('catalog/image')->init($product, 'thumbnail')->__toString();
         $price = $product->getPrice();
