@@ -16,7 +16,7 @@
 "Username","Kasutajatunnus"
 "Password","Parool"
 "<a href=http://help.smaily.com/en/support/solutions/articles/16000062943-create-api-user target=_blank>How to create API credentials?</a>","<a href=http://help.smaily.com/en/support/solutions/articles/16000062943-create-api-user target=_blank>Kuidas teha rakendusliide võtmeid?</a>"
-"Customer Synchronization","Uudiskirja Tellijate Sünkroonimine"
+"Customer synchronization","Uudiskirja tellijate sünkroonimine"
 "How often do you want to synchronize?","Kui tihti soovid kasutajaid sünkroniseerida?"
 "Every 4 hours", "Iga 4 tunni järel"
 "Twice a day", "Kaks korda päevas"
@@ -25,3 +25,4 @@
 "The configuration has been saved.", "Sätted salvestatud"
 "Module is not activated!", "Smaily moodul ei ole aktiveeritud"
 "Could not validate credentials! Your current input is saved, but the module is still disabled. Please try again!", "Ei õnnestunud kasutajat valideerida! Praegused andmed on salvestatud, kuid moodul on endiselt deaktiivne. Palun proovi uuesti!"
+"General settings","Üldised sätted"

@@ -23,6 +23,10 @@ Extension configuration can be found from Magento administration interface, unde
 4. To enable customer synchronization select `Enabled` &rarr; `Yes` status in Customer Synchronization Settings
 5. Select fields you would like to sync and frequency
 
+## RSS-feed
+
+RSS-feed can be found from `store_url/sendsmaily/rss`. RSS-feed outputs 50 last edited products. **Only active and visible products are shown.**
+
 ## Manual export
 At any time you can trigger a manual export from `Newsletter` &rarr; `Newsletter subscribers` by selecting `Sendsmaily` from `Export to:` dropdown and hitting that `Export` button.
 
@@ -36,7 +40,11 @@ Usually a good place to start would be to check Magento CRON's `Schedule Ahead f
 
 ## Changelog
 
-2.0.0
+### 2.0.1
+
+- Add support for direct products import to the Smaily RSS-feed.
+
+### 2.0.0
 
 - Refractor functionality to implement new API
 - Customer Synchronization now removes unsubscribers from Magento store
