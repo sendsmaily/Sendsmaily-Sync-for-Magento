@@ -24,6 +24,9 @@
 		<Sendsmaily_Sync>
 			<active>true</active>
 			<codePool>community</codePool>
+			<depends>
+				<Mage_Newsletter />
+			</depends>
 		</Sendsmaily_Sync>
 	</modules>
 </config>

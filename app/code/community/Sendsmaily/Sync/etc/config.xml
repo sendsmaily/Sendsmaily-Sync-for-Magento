@@ -27,6 +27,17 @@
   </modules>
 
   <frontend>
+    <events>
+      <newsletter_subscriber_save_after>
+        <observers>
+          <smaily_new_subscriber_action>
+            <class>sync/observer</class>
+            <method>newsletterOptInSubscribe</method>
+          </smaily_new_subscriber_action>
+        </observers>
+      </newsletter_subscriber_save_after>
+    </events>
+
     <layout>
       <updates>
         <sync module="Sendsmaily_Sync">
