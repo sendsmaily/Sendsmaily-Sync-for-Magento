@@ -1,0 +1,45 @@
+<?php
+if ($this->shouldCheckCaptcha()) : ?>
+<script type="text/javascript">
+    document.observe('dom:loaded', function() {
+        addRecaptcha();
+    });
+
+    function addRecaptcha() {
+        var newsletterForm = document.querySelector('#newsletter-validate-detail');
+
+        if (newsletterForm) {
+            window.smailyCaptchaSubmit = function() {
+                newsletterForm.submit();
+            };
+
+            var captchaDiv = document.createElement('div');
+            captchaDiv.classList.add('g-recaptcha');
+            captchaDiv.setAttribute('id', 'smaily-recaptcha');
+            newsletterForm.appendChild(captchaDiv);
+
+            var submitButton = newsletterForm.querySelector('#newsletter-validate-detail button[type="submit"]');
+            submitButton.addEventListener('click', function(event) {
+                event.preventDefault();
+                var validateForm = new VarienForm('newsletter-validate-detail');
+                if (validateForm.validator.validate()) {
+                    grecaptcha.execute();
+                };
+            });
+
+        }
+    };
+
+    function onLoadCallback() {
+        var newsletterForm = document.querySelector('#newsletter-validate-detail');
+        if (newsletterForm) {
+            grecaptcha.render('smaily-recaptcha', {
+            sitekey: "<?php echo $this->getCaptchaApiKey() ?>",
+            size : "invisible",
+            callback : "smailyCaptchaSubmit"
+        });
+        }
+    }
+</script>
+<script src="https://www.google.com/recaptcha/api.js?onload=onLoadCallback&render=explicit"async defer></script>
+<?php endif; ?>

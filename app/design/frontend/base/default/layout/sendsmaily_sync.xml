@@ -3,4 +3,9 @@
     <sync_rss_index>
         <block type="sync/rss" name="smly.rss" output="toHtml" />
     </sync_rss_index>
+    <default>
+        <reference name="head">
+            <block type="sync/reCaptcha" name="smly.recaptcha" template="sync/recaptcha.phtml" />
+        </reference>
+    </default>
 </layout>

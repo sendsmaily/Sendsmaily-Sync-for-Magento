@@ -21,6 +21,12 @@
 
 class Sendsmaily_Sync_Model_Observer
 {
+    /**
+     * Observers newsletter subscribe form.
+     *
+     * @param Varien_Event_Observer $observer
+     * @return void
+     */
     public function newsletterOptInSubscribe($observer)
     {
         // Run only if newsletter subscriber opt-in is enabled.
@@ -28,24 +34,56 @@ class Sendsmaily_Sync_Model_Observer
             return;
         }
 
-        $subscriber = $observer->getEvent()->getSubscriber();
-        if (!$subscriber instanceof Mage_Newsletter_Model_Subscriber) {
-            return;
+        // TODO: Should run if email is allready in newsletter subscribers list?
+
+        $params = Mage::app()->getRequest()->getParams();
+
+        if (Mage::helper('sync')->shouldCheckCaptcha()) {
+            if (isset($params['g-recaptcha-response'])) {
+                $response = $params['g-recaptcha-response'];
+                if (!Mage::helper('sync')->isCaptchaValid($response)) {
+                    $this->showError('Error validating CAPTCHA!');
+                    return;
+                }
+            } else {
+                $this->showError('Error loading CAPTCHA!.');
+                return;
+            }
         }
 
-        if ($subscriber->isSubscribed()) {
-            $email = $subscriber->getEmail();
+        if (isset($params['email'])) {
+            $email = $params['email'];
             $store = Mage::app()->getStore()->getName();
-
+    
             $data = array(
                 'email' => $email,
                 'extra' => array(
                     'store' => $store
                 )
             );
-
-            // TODO: Show error message?
-            $response = Mage::helper('sync')->optInSubscribe($data);
+            Mage::helper('sync')->optInSubscribe($data);
         }
+    }
+
+    /**
+     * Shows error message and redirects to base URL.
+     *
+     * @param string $message Error message.
+     * @return void
+     */
+    public function showError($message)
+    {
+        $request = Mage::app()->getRequest();
+        $action = $request->getActionName();
+        $session = Mage::getSingleton('core/session');
+        $session->addError($message);
+
+        Mage::app()->getFrontController()->getAction()->setFlag(
+            $action,
+            Mage_Core_Controller_Varien_Action::FLAG_NO_DISPATCH,
+            true
+        );
+        // TODO: find better way to redirect. Should redirect to page that customer was on.
+        Mage::app()->getFrontController()->getAction()->getResponse()->setRedirect(Mage::getBaseUrl());
     }
 }

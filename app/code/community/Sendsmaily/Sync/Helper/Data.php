@@ -21,6 +21,58 @@
 
 class Sendsmaily_Sync_Helper_Data extends Mage_Adminhtml_Helper_Data
 {
+  /**
+   * Validate google reCAPTCHA response.
+   *
+   * @param string $response reCAPTCHA response from form submit.
+   * @return boolean
+   */
+  public function isCaptchaValid($response)
+  {
+    $secretKey =  Mage::getStoreConfig('newsletter/sendsmaily/recaptcha_secret_key');
+    $data = array(
+      'secret' => $secretKey,
+      'response' => $response
+    );
+
+    $curl = new Varien_Http_Adapter_Curl();
+    $curl->setConfig(array('timeout' => 15));
+    $curl->write(
+        Zend_Http_Client::POST,
+        'https://www.google.com/recaptcha/api/siteverify',
+        '1.1',
+        array(),
+        http_build_query($data)
+    );
+
+    $read = $curl->read();
+    $body = json_decode(Zend_Http_Response::extractBody($read), true);
+    $curl->close();
+
+    if (isset($body['success']) && $body['success'] === true) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * Check if its necessary to check CAPTCHA for newsletter form.
+   *
+   * @return boolean
+   */
+  public function shouldCheckCaptcha()
+  {
+    $check = false;
+
+    if ((bool) Mage::getStoreConfig('newsletter/sendsmaily/active') === true &&
+        (bool) Mage::getStoreConfig('newsletter/sendsmaily/active_captcha')
+      ) {
+      $check = true;
+    }
+
+    return $check;
+  }
 
   /**
    * Check if newsletter form opt-in collection is enabled.
