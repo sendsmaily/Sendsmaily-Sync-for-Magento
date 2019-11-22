@@ -46,7 +46,7 @@ class Sendsmaily_Sync_Model_Observer
                     return;
                 }
             } else {
-                $this->showError('Error loading CAPTCHA!.');
+                $this->showError('Error loading CAPTCHA!');
                 return;
             }
         }

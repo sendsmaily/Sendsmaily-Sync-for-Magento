@@ -14,14 +14,18 @@ Extension configuration can be found from Magento administration interface, unde
 
 * **General settings** &minus; Enables the extension and holds credentials related information.
 * **Customer Synchronization** &minus; Manages subscriber synchronization settings. Select fields to sync and sync frequency.
+* **Newsletter form** &minus; Collect subscribers directly to Smaily from newsletter subscriber form. You can also send welcome emails with this feature.
+
 
 ## Usage
 
 1. Go to `System` &rarr; `Configuration` &rarr; `Newsletter` &rarr; `Smaily Email Marketing And Automation`.
-2. Select `Enabled` &rarr; `Yes` status in General Settings
+2. Select `Enabled` &rarr; `Yes` status in General settings
 3. Insert your Smaily API authentication information and press `Save Config` to get started
-4. To enable customer synchronization select `Enabled` &rarr; `Yes` status in Customer Synchronization Settings
+4. To enable customer synchronization select `Enabled` &rarr; `Yes` status in Customer synchronization settings
 5. Select fields you would like to sync and frequency
+6. To collect subscribers directly to Smaily from newsletter form select `Enabled` &rarr; `Yes` status in Newsletter form section.
+7. We recommend you to use CAPTCHA and you can enable built-in google reCAPTCHA by selecting `Enabled` &rarr; `Yes` status in Enable CAPTCHA field.
 
 ## RSS-feed
 
@@ -39,6 +43,11 @@ To export specific subscriber(s), filter desired subscribers using the fields un
 Usually a good place to start would be to check Magento CRON's `Schedule Ahead for` value. We have found that value of **60** works the best, if you are running daily exports.
 
 ## Changelog
+
+### 2.0.2
+
+- Opt-in emails trigger for newsletter from subscribers
+- Google reCAPTCHA support for newsletter form
 
 ### 2.0.1
 
