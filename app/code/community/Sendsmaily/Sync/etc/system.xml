@@ -161,6 +161,9 @@
               <show_in_default>1</show_in_default>
               <show_in_website>1</show_in_website>
               <show_in_store>0</show_in_store>
+              <depends>
+                <active_newsletter_form>1</active_newsletter_form>
+              </depends>
             </active_captcha>
 
             <recaptcha_site_key translate="label">
