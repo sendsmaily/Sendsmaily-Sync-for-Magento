@@ -34,9 +34,17 @@ class Sendsmaily_Sync_Model_Observer
             return;
         }
 
-        // TODO: Should run if email is allready in newsletter subscribers list?
-
         $params = Mage::app()->getRequest()->getParams();
+
+        // Run only if email is submitted.
+        if (!isset($params['email'])) {
+            return;
+        }
+
+        // Run only if email is a new one.
+        if (!$this->isNewEmail($params['email'])) {
+            return;
+        }
 
         if (Mage::helper('sync')->shouldCheckCaptcha()) {
             if (isset($params['g-recaptcha-response'])) {
@@ -45,24 +53,29 @@ class Sendsmaily_Sync_Model_Observer
                     $this->showError('Error validating CAPTCHA!');
                     return;
                 }
+
+                // Remove reCAPTCHA response from params.
+                unset($params['g-recaptcha-response']);
             } else {
                 $this->showError('Error loading CAPTCHA!');
                 return;
             }
         }
 
-        if (isset($params['email'])) {
-            $email = $params['email'];
-            $store = Mage::app()->getStore()->getName();
-    
-            $data = array(
-                'email' => $email,
-                'extra' => array(
-                    'store' => $store
-                )
-            );
-            Mage::helper('sync')->optInSubscribe($data);
+        $email = $params['email'];
+        $store = Mage::app()->getStore()->getName();
+
+        $extra = array(
+            'store' => $store
+        );
+
+        foreach ($params as $field => $value) {
+            if ($field !== 'email') {
+                $extra[$field] =$value;
+            }
         }
+
+        Mage::helper('sync')->optInSubscribe($email, $extra);
     }
 
     /**
@@ -85,5 +98,35 @@ class Sendsmaily_Sync_Model_Observer
         );
         // TODO: find better way to redirect. Should redirect to page that customer was on.
         Mage::app()->getFrontController()->getAction()->getResponse()->setRedirect(Mage::getBaseUrl());
+    }
+
+    /**
+     * Checks if email is new to newsletter subscriber collection.
+     * Also checks if email exist in customers list and if it belongs to the same customer signing up.
+     *
+     * @param string $email
+     * @return boolean
+     */
+    public function isNewEmail($email)
+    {
+        $subscriber = Mage::getModel('newsletter/subscriber')->loadByEmail($email);
+
+        // If subscriber is subscribed.
+        if ($subscriber->isSubscribed()) {
+            return false;
+        } else {
+            $ownerId = Mage::getModel('customer/customer')
+            ->setWebsiteId(Mage::app()->getStore()->getWebsiteId())
+            ->loadByEmail($email)
+            ->getId();
+
+            $customerSession    = Mage::getSingleton('customer/session');
+            // If customer exists with subscribed email check if this email belongs to the same customer signing up.
+            if ($ownerId !== null && $ownerId != $customerSession->getId()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

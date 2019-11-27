@@ -34,9 +34,9 @@ if ($this->shouldCheckCaptcha()) : ?>
         var newsletterForm = document.querySelector('#newsletter-validate-detail');
         if (newsletterForm) {
             grecaptcha.render('smaily-recaptcha', {
-            sitekey: "<?php echo $this->getCaptchaApiKey() ?>",
-            size : "invisible",
-            callback : "smailyCaptchaSubmit"
+                sitekey: "<?php echo $this->getCaptchaApiKey() ?>",
+                size : "invisible",
+                callback : "smailyCaptchaSubmit"
         });
         }
     }

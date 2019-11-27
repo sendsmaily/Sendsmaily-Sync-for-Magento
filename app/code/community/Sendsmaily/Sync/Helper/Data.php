@@ -63,15 +63,9 @@ class Sendsmaily_Sync_Helper_Data extends Mage_Adminhtml_Helper_Data
    */
   public function shouldCheckCaptcha()
   {
-    $check = false;
-
-    if ((bool) Mage::getStoreConfig('newsletter/sendsmaily/active') === true &&
+    return ((bool) Mage::getStoreConfig('newsletter/sendsmaily/active') === true &&
         (bool) Mage::getStoreConfig('newsletter/sendsmaily/active_captcha')
-      ) {
-      $check = true;
-    }
-
-    return $check;
+    );
   }
 
   /**
@@ -97,11 +91,9 @@ class Sendsmaily_Sync_Helper_Data extends Mage_Adminhtml_Helper_Data
    * @param array $data Subscriber data
    * @return void
    */
-  public function optInSubscribe($data)
+  public function optInSubscribe($email, $extra)
   {
     $curl = Mage::getModel('sync/curl');
-    $email = $data['email'];
-    $extra = $data['extra'];
 
     $address = array(
       'email' => $email,
