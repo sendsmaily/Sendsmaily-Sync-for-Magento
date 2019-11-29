@@ -75,21 +75,17 @@ class Sendsmaily_Sync_Helper_Data extends Mage_Adminhtml_Helper_Data
    */
   public function newsletterOptInEnabled()
   {
-    $enabled = false;
-
-    if ((bool) Mage::getStoreConfig('newsletter/sendsmaily/active') === true &&
-      (bool) Mage::getStoreConfig('newsletter/sendsmaily/active_newsletter_form') == true) {
-      $enabled = true;
-    }
-
-    return $enabled;
+    return ((bool) Mage::getStoreConfig('newsletter/sendsmaily/active') === true &&
+      (bool) Mage::getStoreConfig('newsletter/sendsmaily/active_newsletter_form') == true
+    );
   }
 
   /**
    * Sends newsletter form subscriber information to Smaily
    *
+   * @param string $email Subscriber email
    * @param array $data Subscriber data
-   * @return void
+   * @return array Response from API call
    */
   public function optInSubscribe($email, $extra)
   {
