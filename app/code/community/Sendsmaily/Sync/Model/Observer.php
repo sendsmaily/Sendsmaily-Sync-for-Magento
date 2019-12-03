@@ -22,12 +22,13 @@
 class Sendsmaily_Sync_Model_Observer
 {
     /**
-     * Observers newsletter subscribe form.
+     * Observers Newsletter_SubscriberController_NewAction predispatch.
+     * Validates CAPTCHA response if necessary.
      *
      * @param Varien_Event_Observer $observer
      * @return void
      */
-    public function newsletterOptInSubscribe($observer)
+    public function newsletterCapthcaCheck()
     {
         // Run only if newsletter subscriber opt-in is enabled.
         if (!Mage::helper('sync')->newsletterOptInEnabled()) {
@@ -36,16 +37,6 @@ class Sendsmaily_Sync_Model_Observer
 
         $params = Mage::app()->getRequest()->getParams();
 
-        // Run only if email is submitted.
-        if (!isset($params['email'])) {
-            return;
-        }
-
-        // Run only if email is a new one.
-        if (!$this->isNewEmail($params['email'])) {
-            return;
-        }
-
         if (Mage::helper('sync')->shouldCheckCaptcha()) {
             if (isset($params['g-recaptcha-response'])) {
                 $response = $params['g-recaptcha-response'];
@@ -53,33 +44,61 @@ class Sendsmaily_Sync_Model_Observer
                     $this->showError('Error validating CAPTCHA!');
                     return;
                 }
-
-                // Remove reCAPTCHA response from params.
-                unset($params['g-recaptcha-response']);
             } else {
                 $this->showError('Error loading CAPTCHA!');
                 return;
             }
         }
+    }
 
-        $email = $params['email'];
+    /**
+     * Send subscriber information to Smaily after changing subscription status.
+     * Observes Newsletter_Subscriber_Save_After. Used to trigger OPT-IN and OPT-OUT workflow.
+     *
+     * @param Varien_Event_Observer $observer
+     * @return void
+     */
+    public function subscribeNewsletter($observer)
+    {
+        // Run only if newsletter subscriber opt-in is enabled.
+        if (!Mage::helper('sync')->newsletterOptInEnabled()) {
+            return;
+        }
+
+        // Subscriber model.
+        $subscriber = $observer->getEvent()->getSubscriber();
+
+        $subscribed = Mage_Newsletter_Model_Subscriber::STATUS_SUBSCRIBED;
+        $unsubscribed = Mage_Newsletter_Model_Subscriber::STATUS_UNSUBSCRIBED;
+        $status = (int) $subscriber->getStatus();
+
+        // New subscriber(even with same email) has always statusChanged state TRUE.
+        // API call is still made, but Smaily OPT-IN workflow won't trigger if email allready exists in DB.
+        $statusChanged = $subscriber->getIsStatusChanged();
+        $email = $subscriber->getEmail();
         $store = Mage::app()->getStore()->getName();
 
         $extra = array(
             'store' => $store
         );
 
-        foreach ($params as $field => $value) {
-            if ($field !== 'email') {
-                $extra[$field] =$value;
+        if ($statusChanged) {
+            if ($status == $subscribed) {
+                $request = Mage::helper('sync')->optInSubscribe($email, $extra);
+            } elseif ($status == $unsubscribed) {
+                $request = Mage::helper('sync')->optOutSubscribe($email);
             }
         }
 
-        Mage::helper('sync')->optInSubscribe($email, $extra);
+        // Log message if update not successful.
+        if (isset($request['code']) && (int) $request['code'] !== 101) {
+            $message = 'Error updateing subscriber ' . $email . ' status with subscribeNewsletter observer.';
+            Mage::log($message, null, 'smaily.log', true);
+        }
     }
 
     /**
-     * Shows error message and redirects to base URL.
+     * Shows error message , kills controller and redirects to base URL.
      *
      * @param string $message Error message.
      * @return void
@@ -98,35 +117,5 @@ class Sendsmaily_Sync_Model_Observer
         );
         // TODO: find better way to redirect. Should redirect to page that customer was on.
         Mage::app()->getFrontController()->getAction()->getResponse()->setRedirect(Mage::getBaseUrl());
-    }
-
-    /**
-     * Checks if email is new to newsletter subscriber collection.
-     * Also checks if email exist in customers list and if it belongs to the same customer signing up.
-     *
-     * @param string $email
-     * @return boolean
-     */
-    public function isNewEmail($email)
-    {
-        $subscriber = Mage::getModel('newsletter/subscriber')->loadByEmail($email);
-
-        // If subscriber is subscribed.
-        if ($subscriber->isSubscribed()) {
-            return false;
-        } else {
-            $ownerId = Mage::getModel('customer/customer')
-            ->setWebsiteId(Mage::app()->getStore()->getWebsiteId())
-            ->loadByEmail($email)
-            ->getId();
-
-            $customerSession    = Mage::getSingleton('customer/session');
-            // If customer exists with subscribed email check if this email belongs to the same customer signing up.
-            if ($ownerId !== null && $ownerId != $customerSession->getId()) {
-                return false;
-            }
-        }
-
-        return true;
     }
 }

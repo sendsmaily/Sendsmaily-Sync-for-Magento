@@ -30,12 +30,21 @@
     <events>
       <controller_action_predispatch_newsletter_subscriber_new>
         <observers>
-          <smaily_new_subscriber_action>
+          <smaily_captcha_check>
             <class>sync/observer</class>
-            <method>newsletterOptInSubscribe</method>
-          </smaily_new_subscriber_action>
+            <method>newsletterCapthcaCheck</method>
+          </smaily_captcha_check>
         </observers>
       </controller_action_predispatch_newsletter_subscriber_new>
+
+      <newsletter_subscriber_save_after>
+        <observers>
+          <smaily_subscriber_status_observer>
+            <class>sync/observer</class>
+            <method>subscribeNewsletter</method>
+          </smaily_subscriber_status_observer>
+        </observers>
+      </newsletter_subscriber_save_after>
     </events>
 
     <layout>

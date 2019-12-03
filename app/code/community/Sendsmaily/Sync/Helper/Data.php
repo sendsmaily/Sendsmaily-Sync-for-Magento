@@ -111,6 +111,24 @@ class Sendsmaily_Sync_Helper_Data extends Mage_Adminhtml_Helper_Data
   }
 
   /**
+   * Unsubscribes customer by email
+   *
+   * @param string $email
+   * @return array Result from Smaily API call.
+   */
+  public function optOutSubscribe($email)
+  {
+    $curl = Mage::getModel('sync/curl');
+
+    $data = array(
+      'email' => $email,
+      'is_unsubscribed' => 1,
+    );
+
+    return $curl->callApi('contact', $data, 'POST');
+  }
+
+  /**
    * Restructure collection data for Sendsmaily.
    *
    * @param unknown $collection [optional]
