@@ -14,7 +14,7 @@ Extension configuration can be found from Magento administration interface, unde
 
 * **General settings** &minus; Enables the extension and holds credentials related information.
 * **Customer Synchronization** &minus; Manages subscriber synchronization settings. Select fields to sync and sync frequency.
-* **Newsletter form** &minus; Collect subscribers directly to Smaily from newsletter subscriber form. You can also send welcome emails with this feature.
+* **Subscriber welcome/goodbye emails** &minus; Collect subscribers directly to Smaily and send welcome/goodbye emails with this feature.
 
 
 ## Usage
@@ -24,8 +24,8 @@ Extension configuration can be found from Magento administration interface, unde
 3. Insert your Smaily API authentication information and press `Save Config` to get started
 4. To enable customer synchronization select `Enabled` &rarr; `Yes` status in Customer synchronization settings
 5. Select fields you would like to sync and frequency
-6. To collect subscribers directly to Smaily from newsletter form select `Enabled` &rarr; `Yes` status in Newsletter form section.
-7. We recommend you to use CAPTCHA and you can enable built-in google reCAPTCHA by selecting `Enabled` &rarr; `Yes` status in Enable CAPTCHA field.
+6. To send welcome/goodbye emails to subscribers select `Enabled` &rarr; `Yes` status in Subscriber welcome/goodbye emails form section.
+7. We recommend you to use CAPTCHA and you can enable built-in google reCAPTCHA for newsletter form by selecting `Enabled` &rarr; `Yes` status in Enable CAPTCHA field.
 
 ## RSS-feed
 
@@ -47,7 +47,10 @@ Usually a good place to start would be to check Magento CRON's `Schedule Ahead f
 ### 2.1.0
 
 - Opt-in emails trigger for newsletter from subscribers
+- Opt-in trigger for subscribers changing their subscription state from settings page
+- Opt-out trigger for subscribers changing their subscription state from settings page
 - Google reCAPTCHA support for newsletter form
+- Bugfix - provide initial value for unsubscriber offset
 
 ### 2.0.1
 
