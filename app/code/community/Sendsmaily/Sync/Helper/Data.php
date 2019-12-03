@@ -291,17 +291,17 @@ class Sendsmaily_Sync_Helper_Data extends Mage_Adminhtml_Helper_Data
    * @param int $limit Limit batch size.
    * @return array Unsubscriber emails list.
    */
-  public function getUnsubscribersEmails($limit)
+  public function getUnsubscribersEmails($limit = 1000)
   {
     $curl = Mage::getModel('sync/curl');
     $unsubscribersEmails = array();
     $data = array(
         'list' => 2,
         'limit' => $limit,
+        'offset' => 0,
     );
 
     while (true) {
-        $data['offset'] = $offset;
         $unsubscribers = $curl->callApi('contact', $data);
         if (!$unsubscribers) {
             break;
@@ -312,7 +312,7 @@ class Sendsmaily_Sync_Helper_Data extends Mage_Adminhtml_Helper_Data
         }
 
         // Smaily API call offset is considered as page number, not SQL offset!
-        $offset++;
+        $data['offset']++;
     }
 
     return $unsubscribersEmails;
