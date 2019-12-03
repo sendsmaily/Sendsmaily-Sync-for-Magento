@@ -22,6 +22,113 @@
 class Sendsmaily_Sync_Helper_Data extends Mage_Adminhtml_Helper_Data
 {
   /**
+   * Validate google reCAPTCHA response.
+   *
+   * @param string $response reCAPTCHA response from form submit.
+   * @return boolean
+   */
+  public function isCaptchaValid($response)
+  {
+    $secretKey =  Mage::getStoreConfig('newsletter/sendsmaily/recaptcha_secret_key');
+    $data = array(
+      'secret' => $secretKey,
+      'response' => $response
+    );
+
+    $curl = new Varien_Http_Adapter_Curl();
+    $curl->setConfig(array('timeout' => 15));
+    $curl->write(
+        Zend_Http_Client::POST,
+        'https://www.google.com/recaptcha/api/siteverify',
+        '1.1',
+        array(),
+        http_build_query($data)
+    );
+
+    $read = $curl->read();
+    $body = json_decode(Zend_Http_Response::extractBody($read), true);
+    $curl->close();
+
+    if (isset($body['success']) && $body['success'] === true) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * Check if its necessary to check CAPTCHA for newsletter form.
+   *
+   * @return boolean
+   */
+  public function shouldCheckCaptcha()
+  {
+    return ((bool) Mage::getStoreConfig('newsletter/sendsmaily/active') === true &&
+        (bool) Mage::getStoreConfig('newsletter/sendsmaily/active_captcha')
+    );
+  }
+
+  /**
+   * Check if newsletter form opt-in collection is enabled.
+   *
+   * @return bool
+   */
+  public function newsletterOptInEnabled()
+  {
+    return ((bool) Mage::getStoreConfig('newsletter/sendsmaily/active') === true &&
+      (bool) Mage::getStoreConfig('newsletter/sendsmaily/active_newsletter_form') == true
+    );
+  }
+
+  /**
+   * Sends newsletter form subscriber information to Smaily
+   *
+   * @param string $email Subscriber email
+   * @param array $data Subscriber data
+   * @return array Response from API call
+   */
+  public function optInSubscriber($email, $extra)
+  {
+    $curl = Mage::getModel('sync/curl');
+
+    $address = array(
+      'email' => $email,
+    );
+
+    if (!empty($extra)) {
+      foreach ($extra as $field => $value) {
+        $address[$field] = trim($value);
+      }
+    }
+    
+    $post = array(
+      'addresses' => array(
+        $address
+      )
+    );
+  
+    return $curl->callApi('autoresponder', $post, 'POST');
+  }
+
+  /**
+   * Unsubscribes customer by email
+   *
+   * @param string $email
+   * @return array Result from Smaily API call.
+   */
+  public function optOutSubscriber($email)
+  {
+    $curl = Mage::getModel('sync/curl');
+
+    $data = array(
+      'email' => $email,
+      'is_unsubscribed' => 1,
+    );
+
+    return $curl->callApi('contact', $data, 'POST');
+  }
+
+  /**
    * Restructure collection data for Sendsmaily.
    *
    * @param unknown $collection [optional]
@@ -184,17 +291,17 @@ class Sendsmaily_Sync_Helper_Data extends Mage_Adminhtml_Helper_Data
    * @param int $limit Limit batch size.
    * @return array Unsubscriber emails list.
    */
-  public function getUnsubscribersEmails($limit)
+  public function getUnsubscribersEmails($limit = 1000)
   {
     $curl = Mage::getModel('sync/curl');
     $unsubscribersEmails = array();
     $data = array(
         'list' => 2,
         'limit' => $limit,
+        'offset' => 0,
     );
 
     while (true) {
-        $data['offset'] = $offset;
         $unsubscribers = $curl->callApi('contact', $data);
         if (!$unsubscribers) {
             break;
@@ -205,7 +312,7 @@ class Sendsmaily_Sync_Helper_Data extends Mage_Adminhtml_Helper_Data
         }
 
         // Smaily API call offset is considered as page number, not SQL offset!
-        $offset++;
+        $data['offset']++;
     }
 
     return $unsubscribersEmails;
