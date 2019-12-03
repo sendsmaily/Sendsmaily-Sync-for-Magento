@@ -87,7 +87,7 @@ class Sendsmaily_Sync_Helper_Data extends Mage_Adminhtml_Helper_Data
    * @param array $data Subscriber data
    * @return array Response from API call
    */
-  public function optInSubscribe($email, $extra)
+  public function optInSubscriber($email, $extra)
   {
     $curl = Mage::getModel('sync/curl');
 
@@ -116,7 +116,7 @@ class Sendsmaily_Sync_Helper_Data extends Mage_Adminhtml_Helper_Data
    * @param string $email
    * @return array Result from Smaily API call.
    */
-  public function optOutSubscribe($email)
+  public function optOutSubscriber($email)
   {
     $curl = Mage::getModel('sync/curl');
 

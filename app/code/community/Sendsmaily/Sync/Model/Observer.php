@@ -84,9 +84,9 @@ class Sendsmaily_Sync_Model_Observer
 
         if ($statusChanged) {
             if ($status == $subscribed) {
-                $request = Mage::helper('sync')->optInSubscribe($email, $extra);
+                $request = Mage::helper('sync')->optInSubscriber($email, $extra);
             } elseif ($status == $unsubscribed) {
-                $request = Mage::helper('sync')->optOutSubscribe($email);
+                $request = Mage::helper('sync')->optOutSubscriber($email);
             }
         }
 
