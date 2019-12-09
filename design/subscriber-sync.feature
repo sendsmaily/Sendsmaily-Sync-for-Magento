@@ -1,27 +1,54 @@
-Feature: Newsletter Subscriber synchronisation
-  - In order to send updated customer statuses to Smaily
+Feature: Newsletter Subscriber synchronization
   - As a store owner
-  - I want to use Smaily customer sync to send customer data to Smaily
+  - In order to save time on my newsletter preparations
+  - I want to update subscribers information automatically
 
-Scenario: Fromer customer is subscribed
-  Given fromer customer has subscribed status currently
-  When customer synchronisation collects data
-  Then it should collect data about that customer also
-  But don't update subscribed status
+# Admin changes.
+Scenario: Admin changes subscriber to unsubscribed
+  Given subscriber has subscribed status
+  And subscriber has subscribed status in Smaily
+  When admin changes subscription status to unsubscribed
+  Then subscriber status is synced to unsubscribed
 
-Scenario: Fromer customer is unsubscribed
-  Given fromer customer has unsubscribed status currently
-  When customer synchronisation collects data
-  Then it should collect data about that customer also
-  And update subscription status to unsubscribed
+Scenario: Admin changes subscriber to subscribed
+  Given subscriber has unsubscribed status
+  And subscriber has unsubscribed status in Smaily
+  When admin changes subscription status to subscribed
+  Then subscriber status is synced to unsubscribed
 
-Scenario: New customer creates account that is not signed up for newsletter
-  Given customer has not confirmed subscription status
-  And customer has not confirmed unsubscribed status
-  When customer synchronisation collects data
-  Then it should not collect information about that customer
+# Smaily changes.
+Scenario: Subscriber unsubscribes in Smaily
+  Given subscriber has subscribed status in Smaily
+  When subscriber unsubscribes
+  Then subscriber status is synced to unsubscribed
 
-Scenario: New customer creates account that is signed up for newsletter
-  Given customer has confirmed subscription status
-  When customer synchronisation collects data
-  Then it should collect information about that customer
+Scenario: Subscriber subscribes in Smaily
+  Given subscriber does not exists in Magento
+  When subscriber subscribes in Smaily
+  Then subscriber is not synced
+
+# Customer changes.
+Scenario: Customer changes subscriber to unsubscribed
+  Given subscriber has subscribed status
+  And subscriber has subscribed status in Smaily
+  When customer changes subscription status to unsubscribed
+  Then subscriber status is synced to unsubscribed
+
+Scenario: Customer changes subscriber to subscribed
+  Given subscriber has unsubscribed status
+  And subscriber has unsubscribed status in Smaily
+  When customer changes subscription status to subscribed
+  Then subscriber status is synced to unsubscribed
+
+# State scenarios.
+Scenario: Subscriber exists in store with subscribed status
+  Given subscriber exists in store with subscribed status
+  And subscriber does not exist in Smaily
+  When customer synchronization is ran
+  Then subscriber is created in Smaily
+
+Scenario: Subscriber exists in store with unsubscribed status
+  Given subscriber exists in store with unsubscribed status
+  And subscriber does not exist in Smaily
+  When customer synchronization is ran
+  Then unsubscribed subscriber is created in Smaily
