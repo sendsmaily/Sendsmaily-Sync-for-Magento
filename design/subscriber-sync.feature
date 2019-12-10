@@ -1,54 +1,64 @@
 Feature: Newsletter Subscriber synchronization
   - As a store owner
-  - In order to save time on my newsletter preparations
   - I want to update subscribers information automatically
+  - So that I can save time on my newsletter preparations
 
-# Admin changes.
-Scenario: Admin changes subscriber to unsubscribed
-  Given subscriber has subscribed status
-  And subscriber has subscribed status in Smaily
-  When admin changes subscription status to unsubscribed
-  Then subscriber status is synced to unsubscribed
+  Entities:
+    Admin - A person that has admin rights in Magento store.
+    Visitor - A person that visits Magento store but is anonymous.
+    Guest - A person who has created an order or signed up for a newsletter. Guest has not created
+      unique customer account, but has a distinct email address in Magento store.
+    Customer - A person who has created an account in store.
+    Client - A person who is a guest or a customer.
+    Subscriber - Person who has at one point joined newsletter list.
+    Unsubscriber - Person who has canceled their subscription.
 
-Scenario: Admin changes subscriber to subscribed
-  Given subscriber has unsubscribed status
-  And subscriber has unsubscribed status in Smaily
-  When admin changes subscription status to subscribed
-  Then subscriber status is synced to unsubscribed
+  Rule: Unsubscriber is always prime
+    Scenario: Admin unsubscribes a subscriber in Magento
+      Given there is a subscriber
+      And the same subscriber exists in Smaily
+      When admin unsubscribes a subscriber
+      Then the subscriber is synced to unsubscriber
 
-# Smaily changes.
-Scenario: Subscriber unsubscribes in Smaily
-  Given subscriber has subscribed status in Smaily
-  When subscriber unsubscribes
-  Then subscriber status is synced to unsubscribed
+    Scenario: Admin subscribes a client in Magento
+      Given there is a client
+      And the same client is unsubscriber in Smaily
+      When admin subscribes that client
+      Then the client is synced to unsubscriber
 
-Scenario: Subscriber subscribes in Smaily
-  Given subscriber does not exists in Magento
-  When subscriber subscribes in Smaily
-  Then subscriber is not synced
+    Scenario: Customer unsubscribes in Magento
+      Given there is a subscriber
+      And the same subscriber exists in Smaily
+      When customer unsubscribes
+      Then the customer is synced to unsubscriber
 
-# Customer changes.
-Scenario: Customer changes subscriber to unsubscribed
-  Given subscriber has subscribed status
-  And subscriber has subscribed status in Smaily
-  When customer changes subscription status to unsubscribed
-  Then subscriber status is synced to unsubscribed
+    Scenario: Customer subscribes in Magento
+      Given there is an unsubscriber
+      And the same unsubscriber exists in Smaily
+      When customer subscribes
+      Then customer remains as unsubscriber
 
-Scenario: Customer changes subscriber to subscribed
-  Given subscriber has unsubscribed status
-  And subscriber has unsubscribed status in Smaily
-  When customer changes subscription status to subscribed
-  Then subscriber status is synced to unsubscribed
+    Scenario: Subscriber unsubscribes
+      Given there is a subscriber in Smaily
+      And the same subscriber exists in Magento
+      When subscriber unsubscribes
+      Then subscriber is synced to unsubscriber
 
-# State scenarios.
-Scenario: Subscriber exists in store with subscribed status
-  Given subscriber exists in store with subscribed status
-  And subscriber does not exist in Smaily
-  When customer synchronization is ran
-  Then subscriber is created in Smaily
+    Scenario: Unsubscriber exists in Magento but not in Smaily
+      Given there is an unsubscriber
+      And the same subscriber does not exist in Smaily
+      When customer synchronization is ran
+      Then unsubscriber is created in Smaily
 
-Scenario: Subscriber exists in store with unsubscribed status
-  Given subscriber exists in store with unsubscribed status
-  And subscriber does not exist in Smaily
-  When customer synchronization is ran
-  Then unsubscribed subscriber is created in Smaily
+  Rule: First time subscribers move to Smaily
+    Scenario: New subscribers exists in Magento but not in Smaily
+      Given there is a subscriber
+      And the same subscriber does not exist in Smaily
+      When subscribers are synchronized
+      Then subscriber is created in Smaily
+
+  Rule: Smaily subscribers don't move to Magento
+    Scenario: Subscriber subscribes
+      Given subscriber does not exists in Magento
+      When subscriber subscribes in Smaily
+      Then subscriber is not added to Magento
