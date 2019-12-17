@@ -96,7 +96,6 @@
             </rss_feed_section>
 
             <rss_url translate="label">
-              <label>RSS URL</label>
               <frontend_model>sync/rss_url</frontend_model>
               <sort_order>21</sort_order>
               <show_in_default>1</show_in_default>
