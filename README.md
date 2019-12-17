@@ -44,6 +44,11 @@ Usually a good place to start would be to check Magento CRON's `Schedule Ahead f
 
 ## Changelog
 
+### 2.1.1
+
+- Add section to Admin panel for easy access to Smaily RSS-feed
+- RSS-feed now supports multistore
+
 ### 2.1.0
 
 - Opt-in emails trigger for newsletter from subscribers
