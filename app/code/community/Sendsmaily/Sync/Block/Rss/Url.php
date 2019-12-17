@@ -34,8 +34,8 @@ class Sendsmaily_Sync_Block_Rss_Url extends Mage_Adminhtml_Block_System_Config_F
         // Table header.
         $html = '<table style="width:100%">' .
                 '<tr>' .
-                    '<th>Store</th>' .
-                    '<th>Link</th>' .
+                    '<th>' . $this->__('Store') . '</th>' .
+                    '<th>' . $this->__('Link') . '</th>' .
                 '</tr>';
 
         // Add rows.
@@ -56,7 +56,7 @@ class Sendsmaily_Sync_Block_Rss_Url extends Mage_Adminhtml_Block_System_Config_F
             $button = $this->getLayout()->createBlock('adminhtml/widget_button')
                 ->setType('button')
                 ->setClass('scalable')
-                ->setLabel('View RSS-feed')
+                ->setLabel($this->__('View RSS-feed'))
                 ->setOnClick("window.open('$url')")
                 ->toHtml();
 
