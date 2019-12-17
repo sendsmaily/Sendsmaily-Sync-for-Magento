@@ -25,7 +25,7 @@ class Sendsmaily_Sync_Block_Rss_Url extends Mage_Adminhtml_Block_System_Config_F
      * Creates table with buttons to link to Smaily RSS feed for easy access from admin page.
      *
      * @param Varien_Data_Form_Element_Abstract $element
-     * @return $html Html of button element.
+     * @return $html table of store names with buttons to RSS-feed.
      */
     protected function _getElementHtml(Varien_Data_Form_Element_Abstract $element)
     {
