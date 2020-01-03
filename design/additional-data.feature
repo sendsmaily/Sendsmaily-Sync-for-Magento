@@ -1,10 +1,10 @@
 Feature: Additional fields synchronization
   - As a store owner
-  - I want to get subscribers details from store
-  - So I would be able to send personalized emails and filter subscribers
+  - I want to synchronize subscribers´ additional details to Smaily
+  - So I can send personalized messages and target subset of my subscribers
 
   Entities:
-    Newsletter Subscriber - Person who exists in newsletter subscribers list in Magento. Newsletter
+    Newsletter Subscriber - Email address in Magento´s newsletter subscribers list. Newsletter
       subscriber can have subscribed and unsubscribed status.
     Customer - A person who has created an account in store.
 
