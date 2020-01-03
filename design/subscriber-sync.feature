@@ -1,26 +1,26 @@
 Feature: Newsletter Subscribers synchronization
   - As a store owner
-  - I want to update subscribers automatically
+  - I want to automatically keep subscribers subscription status up to date
   - So that I will save time on my newsletter preparations
 
   Entities:
     Admin - A person that has admin rights in Magento store.
     Customer - A person who has created an account in store.
-    Newsletter Subscriber - Person who exists in newsletter subscribers list in Magento. Newsletter
+    Newsletter Subscriber - Email address in Magento´s newsletter subscribers list. Newsletter
       subscriber can have subscribed and unsubscribed status.
 
-  Rule: New subscribers move to Smaily
+  Rule: Newsletter Subscribers are imported to Smaily
     Scenario: Newsletter Subscriber does not exist in Smaily
       Given there is a Newsletter Subscriber
       And the same Newsletter Subscriber does not exist in Smaily
-      When subscribers are updated
+      When subscribers are synchronized
       Then the Newsletter Subscriber is created in Smaily
 
-  Rule: Unsubscriber is always prime
+  Rule: Unsubscribed Newsletter Subscriber is always prime
     Scenario: Unsubscribed Newsletter Subscriber does not exist in Smaily
       Given there is an unsubscribed Newsletter Subscriber
       And the same unsubscriber does not exist in Smaily
-      When subscribers are updated
+      When subscribers are synchronized
       Then the unsubscriber is created in Smaily
 
     Scenario: Admin unsubscribes a Newsletter Subscriber
