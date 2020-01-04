@@ -27,16 +27,24 @@ class Sendsmaily_Sync_Block_Rss extends Mage_Rss_Block_Catalog_Abstract
     {
         // Setting cache to save the RSS for 5 minutes.
         $this->setCacheTags(array(self::CACHE_TAG));
-        $this->setCacheKey('sendsmaily_rss_index');
+        $this->setCacheKey(
+            'sendsmaily_rss_index_' .
+            $this->getRequest()->getParam('store_id')
+        );
         $this->setCacheLifetime(300);
     }
 
     protected function _toHtml()
     {
-        $storeId = $this->_getStoreId();
+        // Allow to filter product feed based on store.
+        if (!empty($this->getRequest()->getParam('store_id'))) {
+            $storeId = $this->getRequest()->getParam('store_id');
+        } else {
+            $storeId = $this->_getStoreId(); // From session.
+        }
 
         // Header.
-        $title = Mage::app()->getStore()->getGroup()->getName();
+        $title = Mage::app()->getStore($storeId)->getName();
         $lang = Mage::getStoreConfig('general/locale/code');
         $lastBuildDate = Mage::getSingleton('core/date')->date('D, d M Y H:i:s');
 
