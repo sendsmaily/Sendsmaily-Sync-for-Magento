@@ -1,0 +1,10 @@
+tasks:
+  up:
+    run: docker-compose up -d
+  down:
+    run: docker-compose down
+  install-sampledata:
+    run: docker exec -it magento1 install-sampledata
+  install-magento:
+    run: docker exec -it magento1 install-magento
+  

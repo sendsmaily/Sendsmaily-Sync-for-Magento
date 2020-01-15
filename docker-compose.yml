@@ -1,0 +1,40 @@
+version: '3.7'
+
+services:
+  magento1:
+    container_name: magento1
+    image: alexcheng/magento:latest
+    ports:
+      - "80:80"
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_DATABASE=magento1
+      - MYSQL_USER=db_user
+      - MYSQL_PASSWORD=db_password
+      - MAGENTO_LOCALE=et_EE
+      - MAGENTO_TIMEZONE=Europe/Tallinn
+      - MAGENTO_DEFAULT_CURRENCY=EUR
+      - MAGENTO_URL=http://dev.magento
+      - MAGENTO_ADMIN_FIRSTNAME=admin
+      - MAGENTO_ADMIN_LASTNAME=admin
+      - MAGENTO_ADMIN_EMAIL=smlydev@smly.com
+      - MAGENTO_ADMIN_USERNAME=smailydev
+      - MAGENTO_ADMIN_PASSWORD=smailydev1
+    volumes:
+      - magento-data:/var/www/html
+    depends_on:
+      - db
+
+  db:
+    container_name: magento1_db
+    image: bitnami/mariadb:10.3
+    environment:
+      - MARIADB_ROOT_USER=db_user
+      - MARIADB_ROOT_PASSWORD=db_password
+      - MARIADB_DATABASE=magento1
+    volumes:
+      - db-data:/bitnami/mariadb
+
+volumes:
+  db-data:
+  magento-data:
