@@ -3,7 +3,14 @@ version: '3.7'
 services:
   magento1:
     container_name: magento1
-    image: alexcheng/magento:latest
+    image: sendsmaily/magento1
+    build:
+      context: .
+      args:
+        - username
+        - user_id
+        - group
+        - group_id
     ports:
       - "80:80"
     environment:
@@ -14,14 +21,15 @@ services:
       - MAGENTO_LOCALE=et_EE
       - MAGENTO_TIMEZONE=Europe/Tallinn
       - MAGENTO_DEFAULT_CURRENCY=EUR
-      - MAGENTO_URL=http://dev.magento
+      - MAGENTO_URL=http://127.0.0.1/
       - MAGENTO_ADMIN_FIRSTNAME=admin
       - MAGENTO_ADMIN_LASTNAME=admin
       - MAGENTO_ADMIN_EMAIL=smlydev@smly.com
       - MAGENTO_ADMIN_USERNAME=smailydev
       - MAGENTO_ADMIN_PASSWORD=smailydev1
     volumes:
-      - magento-data:/var/www/html
+      - magento1-data:/var/www/html
+      - ../.:/var/www/html/smailyformagento1
     depends_on:
       - db
 
@@ -33,8 +41,8 @@ services:
       - MARIADB_ROOT_PASSWORD=db_password
       - MARIADB_DATABASE=magento1
     volumes:
-      - db-data:/bitnami/mariadb
+      - magento1-db-data:/bitnami/mariadb
 
 volumes:
-  db-data:
-  magento-data:
+  magento1-data:
+  magento1-db-data:
