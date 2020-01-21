@@ -12,7 +12,7 @@ services:
         - group
         - group_id
     ports:
-      - "80:80"
+      - "8080:80"
     environment:
       - MYSQL_HOST=db
       - MYSQL_DATABASE=magento1
@@ -21,7 +21,7 @@ services:
       - MAGENTO_LOCALE=et_EE
       - MAGENTO_TIMEZONE=Europe/Tallinn
       - MAGENTO_DEFAULT_CURRENCY=EUR
-      - MAGENTO_URL=http://127.0.0.1/
+      - MAGENTO_URL=http://127.0.0.1:8080/
       - MAGENTO_ADMIN_FIRSTNAME=admin
       - MAGENTO_ADMIN_LASTNAME=admin
       - MAGENTO_ADMIN_EMAIL=smlydev@smly.com
@@ -35,13 +35,14 @@ services:
 
   db:
     container_name: magento1_db
-    image: bitnami/mariadb:10.3
+    image: mysql:5.7
     environment:
-      - MARIADB_ROOT_USER=db_user
-      - MARIADB_ROOT_PASSWORD=db_password
-      - MARIADB_DATABASE=magento1
+      - MYSQL_USER=db_user
+      - MYSQL_PASSWORD=db_password
+      - MYSQL_ROOT_PASSWORD=db_password
+      - MYSQL_DATABASE=magento1
     volumes:
-      - magento1-db-data:/bitnami/mariadb
+      - magento1-db-data:/var/lib/mysql
 
 volumes:
   magento1-data:
