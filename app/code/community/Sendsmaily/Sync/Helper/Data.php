@@ -81,6 +81,18 @@ class Sendsmaily_Sync_Helper_Data extends Mage_Adminhtml_Helper_Data
   }
 
   /**
+   * Check if sending welcome/goodbye emails via Magento is enabled.
+   *
+   * @return bool
+   */
+  public function magentoNewsletterEmailEnabled()
+  {
+    return ((bool) Mage::getStoreConfig('newsletter/sendsmaily/active') === true &&
+      (bool) Mage::getStoreConfig('newsletter/sendsmaily/active_magento_newsletter_email') == true
+    );
+  }
+
+  /**
    * Sends newsletter form subscriber information to Smaily
    *
    * @param string $email Subscriber email
@@ -100,13 +112,13 @@ class Sendsmaily_Sync_Helper_Data extends Mage_Adminhtml_Helper_Data
         $address[$field] = trim($value);
       }
     }
-    
+
     $post = array(
       'addresses' => array(
         $address
       )
     );
-  
+
     return $curl->callApi('autoresponder', $post, 'POST');
   }
 
