@@ -28,6 +28,8 @@
 "General settings","Üldised sätted"
 "Subscriber welcome/goodbye emails", "Uudiskirja liituja tervitus/hüvastijättu kirjad"
 "Trigger newsletter subscriber opt-in and opt-out workflows from newsletter form and customer settings page. Learn more from our tutorial on <a href=""http://help.smaily.com/en/support/solutions/articles/16000092458-creating-automation-workflows#a4"" target=""_blank"">how to create welcome emails.</a>","Käivita opt-in ning opt-out automaatikaid uudiskirja vormiga liitudes ning kasutaja sätteid muutes. Loe kuidas saad saata<a href=""http://help.smaily.com/en/support/solutions/articles/16000092458-creating-automation-workflows#a4"" target=""_blank""> automaatse tervituskirja liitujale.</a>"
+"Magento welcome/goodbye emails", "Vaikimisi Magento tervitus/hüvastijättu kirjad"
+"Send opt-in and opt-out emails via Magento store. Disable if you have already set up opt-in/opt-out workflows in Smaily dashboard!","Saada opt-in ning opt-out automaatikaid läbi Magento poe. Lülita seade välja, kui oled juba seadistanud opt-in ja opt-out automaatikaid Smaily veebiliideses!"
 "Enable Google reCAPTCHA", "Aktiveeri Google reCAPTCHA"
 "Enable reCAPTCHA for newsletter form. We strongly advice you to use CAPTCHA to keep bots from polluting subscribers list.", "Aktiveeri Google reCAPTCHA uudiskirja vormile. CAPTCHA kastuamine on tungivalt soovitatav. See hoiab uudiskirjaga liitujate andmebaasi puhtana."
 "<a href=""https://www.google.com/recaptcha/admin/create"" target=""_blank"">You can create Google reCAPTCHA API keys here.</a>","<a href=https://www.google.com/recaptcha/admin/create target=_blank> CAPTCHA võtmeid saad teha siin.</a>"
