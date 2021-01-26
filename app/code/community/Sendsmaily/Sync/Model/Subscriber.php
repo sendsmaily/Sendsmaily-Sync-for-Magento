@@ -23,21 +23,21 @@ class Sendsmaily_Sync_Model_Subscriber extends Mage_Newsletter_Model_Subscriber
 {
     public function sendConfirmationSuccessEmail()
     {
-        // Send subscription email via Magento.
-        if (Mage::helper('sync')->magentoNewsletterEmailEnabled()) {
-            return parent::sendConfirmationSuccessEmail();
-        }
         // Do not send.
-        return $this;
+        if ((bool) Mage::getStoreConfig('newsletter/sendsmaily/active') === true && !Mage::helper('sync')->magentoNewsletterEmailEnabled()) {
+            return $this;
+        }
+        // Send subscription email via Magento.
+        return parent::sendConfirmationSuccessEmail();
     }
 
     public function sendUnsubscriptionEmail()
     {
-        // Send unsubscription email via Magento.
-        if (Mage::helper('sync')->magentoNewsletterEmailEnabled()) {
-            return parent::sendUnsubscriptionEmail();
-        }
         // Do not send.
-        return $this;
+        if ((bool) Mage::getStoreConfig('newsletter/sendsmaily/active') === true && !Mage::helper('sync')->magentoNewsletterEmailEnabled()) {
+            return $this;
+        }
+        // Send unsubscription email via Magento.
+        return parent::sendUnsubscriptionEmail();
     }
 }
