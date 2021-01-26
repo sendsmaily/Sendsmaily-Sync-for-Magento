@@ -30,6 +30,7 @@ services:
     volumes:
       - magento1-data:/var/www/html
       - ../.:/var/www/html/smailyformagento1
+      - ./sendmail-mailhog.ini:/usr/local/etc/php/conf.d/sendmail-mailhog.ini
     depends_on:
       - db
 
