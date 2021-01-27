@@ -46,7 +46,7 @@ services:
       - magento1-db-data:/var/lib/mysql
 
   mailhog:
-    container_name: mailhog
+    container_name: magento1_mailhog
     image: mailhog/mailhog
     ports:
       - 1025:1025
