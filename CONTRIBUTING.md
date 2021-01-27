@@ -77,8 +77,3 @@ tusk update-symlinks
 ### Sending mail via MailHog
 
 The development environment has included MailHog as an SMTP server. This will enable the Magento store to send out emails. MailHog has a web interface, so you can view mail which has been sent. The web interface is available at <http://localhost:8025>.
-
-**Set SMTP server to MailHog**
-
-To make Magento use MailHog, you must go to the admin panel and change the mail sending host and port.
-Go to ```System > Configuration > System > Mail Sending Settings``` and change `host` to `mailhog`, and `port` to `1025`.
