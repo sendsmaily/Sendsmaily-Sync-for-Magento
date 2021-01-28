@@ -1,5 +1,9 @@
 # Changelog
 
+### 2.2.0
+
+- Disable Magento newsletter emails if opt-in/out enabled - [[#15](https://github.com/sendsmaily/Sendsmaily-Sync-for-Magento/issues/15)]
+
 ### 2.1.1
 
 - Add section to Admin panel for easy access to Smaily RSS-feed
