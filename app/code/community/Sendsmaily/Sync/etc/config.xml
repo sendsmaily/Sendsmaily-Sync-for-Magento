@@ -71,6 +71,11 @@
       <sync>
         <class>Sendsmaily_Sync_Model</class>
       </sync>
+      <newsletter>
+        <rewrite>
+          <subscriber>Sendsmaily_Sync_Model_Subscriber</subscriber>
+        </rewrite>
+      </newsletter>
     </models>
 
     <blocks>
