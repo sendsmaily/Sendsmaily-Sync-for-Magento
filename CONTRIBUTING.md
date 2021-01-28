@@ -67,9 +67,13 @@ The Smaily installation script uses [Allow Symlinks](https://github.com/sreichel
 
 When you create new files you need to let also Modman know about where to create new links.
 
-After creating a new file add the routing description to `modman` file. 
+After creating a new file add the routing description to `modman` file.
 
 You can update symlinks in container with tusk command:
 ```
 tusk update-symlinks
 ```
+
+### Sending mail via MailHog
+
+The development environment has included MailHog as an SMTP server. This will enable the Magento store to send out emails. MailHog has a web interface, so you can view mail which has been sent. The web interface is available at <http://localhost:8025>.

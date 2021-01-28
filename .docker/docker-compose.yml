@@ -30,6 +30,7 @@ services:
     volumes:
       - magento1-data:/var/www/html
       - ../.:/var/www/html/smailyformagento1
+      - ./smaily.ini:/usr/local/etc/php/conf.d/smaily.ini
     depends_on:
       - db
 
@@ -43,6 +44,13 @@ services:
       - MYSQL_DATABASE=magento1
     volumes:
       - magento1-db-data:/var/lib/mysql
+
+  mailhog:
+    container_name: magento1_mailhog
+    image: mailhog/mailhog
+    ports:
+      - 1025:1025
+      - 8025:8025
 
 volumes:
   magento1-data:
