@@ -21,6 +21,11 @@
 
 class Sendsmaily_Sync_Model_Subscriber extends Mage_Newsletter_Model_Subscriber
 {
+    /**
+     * Skip sending out confirmation success email if Smaily opt-in enabled.
+     *
+     * @return Sendsmaily_Sync_Model_Subscriber|Mage_Newsletter_Model_Subscriber
+     */
     public function sendConfirmationSuccessEmail()
     {
         // Do not send.
@@ -31,6 +36,11 @@ class Sendsmaily_Sync_Model_Subscriber extends Mage_Newsletter_Model_Subscriber
         return parent::sendConfirmationSuccessEmail();
     }
 
+    /**
+     * Skip sending out unsubsciption email if Smaily opt-in enabled.
+     *
+     * @return Sendsmaily_Sync_Model_Subscriber|Mage_Newsletter_Model_Subscriber
+     */
     public function sendUnsubscriptionEmail()
     {
         // Do not send.
